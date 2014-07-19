@@ -1,0 +1,22 @@
+{
+    "name": "fusonic/opengraph",
+    "description": "PHP library for crawling and hosting Open Graph resources.",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthias Burtscher",
+            "email": "matthias.burtscher@fusonic.net"
+        }
+    ],
+    "require": {
+        "symfony/dom-crawler": "2.5.x-dev",
+        "symfony/css-selector": "2.5.x-dev",
+        "fusonic/linq": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Fusonic\\OpenGraph": "src/"
+        }
+    }
+}
