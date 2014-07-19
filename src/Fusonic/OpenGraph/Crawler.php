@@ -2,8 +2,13 @@
 
 namespace Fusonic\OpenGraph;
 
+use GuzzleHttp\Adapter\AdapterInterface;
+use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler as SymfonyCrawler;
 
+/**
+ * Crawler that extracts Open Graph data from either a URL or a HTML string.
+ */
 class Crawler
 {
     const DESCRIPTION = "description";
@@ -26,38 +31,77 @@ class Crawler
     const VIDEO_WIDTH = "video:width";
     const VIDEO_HEIGHT = "video:height";
 
+    private $client;
+
+    /**
+     * When enabled, crawler will read content of title and meta description if no
+     * Open Graph data is provided by target page.
+     *
+     * @var bool
+     */
     public $useFallbackMode = false;
 
-    public function __construct()
+    /**
+     * When enabled, crawler will throw exceptions for some crawling errors like unexpected
+     * Open Graph elements.
+     *
+     * @var bool
+     */
+    public $debug = false;
+
+    /**
+     * @param   AdapterInterface    $adapter        Guzzle adapter to use for making HTTP requests.
+     */
+    public function __construct(AdapterInterface $adapter = null)
     {
+        $this->client = new Client(
+            [
+                "adapter" => $adapter,
+            ]
+        );
     }
 
+    /**
+     * Fetches HTML content from the given URL and then crawls it for Open Graph data.
+     *
+     * @param   string  $url            URL to be crawled.
+     *
+     * @return  Website
+     */
     public function crawlUrl($url)
     {
-        $content = file_get_contents($url);
-        return $this->crawlContent($content, $url);
+        // Fetch HTTP content using Guzzle
+        $response = $this->client->get($url);
+
+        return $this->crawlHtml($response->getBody()->__toString(), $url);
     }
 
-    public function crawlContent($content, $url = null)
+    /**
+     * Crawls the given HTML string for OpenGraph data.
+     *
+     * @param   string  $html           HTML string, usually whole content of crawled web resource.
+     * @param   string  $fallbackUrl    URL to use when fallback mode is enabled.
+     *
+     * @return  Object
+     */
+    public function crawlHtml($html, $fallbackUrl = null)
     {
-        // Create new page instance holding information
-        $page = new Page();
-
         // Extract all data that can be found
-        $this->extractOpenGraphData($content, $page);
+        $page = $this->extractOpenGraphData($html);
 
         // Use the user's URL as fallback
         if ($this->useFallbackMode && $page->url === null) {
-            $page->url = $url;
+            $page->url = $fallbackUrl;
         }
 
         // Return result
         return $page;
     }
 
-    private function extractOpenGraphData($content, Page $page)
+    private function extractOpenGraphData($content)
     {
         $crawler = new SymfonyCrawler($content);
+        $page = new Website();
 
         // Get all meta-tags starting with "og:"
         $ogMetaTags = $crawler->filter("meta[property^='og:']");
@@ -80,13 +124,17 @@ class Crawler
                     break;
                 case self::IMAGE:
                 case self::IMAGE_URL:
-                    $page->images[] = new Image($value);
+                    $page->images[] = new Elements\Image($value);
                     break;
                 case self::IMAGE_HEIGHT:
                 case self::IMAGE_SECURE_URL:
                 case self::IMAGE_TYPE:
                 case self::IMAGE_WIDTH:
-                    $this->handleImageAttribute($page->images[count($page->images) - 1], $name, $value);
+                    if (count($page->images) > 0) {
+                        $this->handleImageAttribute($page->images[count($page->images) - 1], $name, $value);
+                    } elseif ($this->debug) {
+                        throw new \UnexpectedValueException(printf("Found %0 property but no image was found before.", $name));
+                    }
                     break;
                 case self::LOCALE:
                     if ($page->locale === null) {
@@ -113,13 +161,17 @@ class Crawler
                     break;
                 case self::VIDEO:
                 case self::VIDEO_URL:
-                    $page->videos[] = new Video($value);
+                    $page->videos[] = new Elements\Video($value);
                     break;
                 case self::VIDEO_HEIGHT:
                 case self::VIDEO_SECURE_URL:
                 case self::VIDEO_TYPE:
                 case self::VIDEO_WIDTH:
-                    $this->handleVideoAttribute($page->videos[count($page->videos) - 1], $name, $value);
+                    if (count($page->videos) > 0) {
+                        $this->handleVideoAttribute($page->videos[count($page->ideos) - 1], $name, $value);
+                    } elseif ($this->debug) {
+                        throw new \UnexpectedValueException(printf("Found %0 property but no video was found before.", $name));
+                    }
             }
         }
 
@@ -138,9 +190,11 @@ class Crawler
                 $page->description = trim($descriptionElement->attr("content"));
             }
         }
+
+        return $page;
     }
 
-    private function handleImageAttribute(Image $element, $name, $value)
+    private function handleImageAttribute(Elements\Image $element, $name, $value)
     {
         switch($name)
         {
@@ -159,7 +213,7 @@ class Crawler
         }
     }
 
-    private function handleVideoAttribute(Video $element, $name, $value)
+    private function handleVideoAttribute(Elements\Video $element, $name, $value)
     {
         switch($name)
         {
@@ -176,10 +230,5 @@ class Crawler
                 $element->secureUrl = $value;
                 break;
         }
-    }
-
-    private function extractFallbackValue($crawler, $property)
-    {
-
     }
 }
