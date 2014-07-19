@@ -8,6 +8,7 @@ fusonic-opengraph is a simple library to read Open Graph data from the web. It a
 
 It is currently under development and not inteded for production use.
 
-See ![ogp.me](http://ogp.me) for information on the Open Graph protocol.
+
+See [ogp.me](http://ogp.me) for information on the Open Graph protocol.
 
 _Samples will follow._
