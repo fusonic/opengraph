@@ -6,7 +6,10 @@ if (!$loader = @include __DIR__.'/../vendor/autoload.php') {
         'php composer.phar install'.PHP_EOL);
 }
 
+// Create a new crawler
 $crawler = new Fusonic\OpenGraph\Crawler();
-$page = $crawler->crawlUrl("https://www.youtube.com/watch?v=w5vaKzC5rSM");
 
-var_dump($page);
+// Crawl the desired URL and retrieve a Fusonic\OpenGraph\Object in response
+$object = $crawler->crawlUrl("https://github.com");
+
+var_dump($object);

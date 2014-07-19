@@ -2,6 +2,8 @@
 
 namespace Fusonic\OpenGraph\Elements;
 
+use Fusonic\OpenGraph\Property;
+
 /**
  * An Open Graph image element.
  */
@@ -50,5 +52,38 @@ class Image extends Element
         parent::__construct();
 
         $this->url = $url;
+    }
+
+    /**
+     * Gets all properties set on this element.
+     *
+     * @return  array|Property[]
+     */
+    public function getProperties()
+    {
+        $properties = array();
+
+        // URL must precede all other properties
+        if ($this->url !== null) {
+            $properties[] = new Property(Property::IMAGE_URL, $this->url);
+        }
+
+        if ($this->height !== null) {
+            $properties[] = new Property(Property::IMAGE_HEIGHT, $this->height);
+        }
+
+        if ($this->secureUrl !== null) {
+            $properties[] = new Property(Property::IMAGE_SECURE_URL, $this->secureUrl);
+        }
+
+        if ($this->type !== null) {
+            $properties[] = new Property(Property::IMAGE_TYPE, $this->type);
+        }
+
+        if ($this->width !== null) {
+            $properties[] = new Property(Property::IMAGE_WIDTH, $this->width);
+        }
+
+        return $properties;
     }
 }

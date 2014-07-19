@@ -2,8 +2,10 @@
 
 namespace Fusonic\OpenGraph;
 
+use Fusonic\Linq\Linq;
 use GuzzleHttp\Adapter\AdapterInterface;
 use GuzzleHttp\Client;
+use GuzzleHttp\Stream\functionsTest;
 use Symfony\Component\DomCrawler\Crawler as SymfonyCrawler;
 
 /**
@@ -11,26 +13,6 @@ use Symfony\Component\DomCrawler\Crawler as SymfonyCrawler;
  */
 class Crawler
 {
-    const DESCRIPTION = "description";
-    const DETERMINER = "determiner";
-    const IMAGE = "image";
-    const IMAGE_URL = "image:url";
-    const IMAGE_SECURE_URL = "image:secure_url";
-    const IMAGE_TYPE = "image:type";
-    const IMAGE_WIDTH = "image:width";
-    const IMAGE_HEIGHT = "image:height";
-    const LOCALE = "locale";
-    const LOCALE_ALTERNATE = "locale:alternate";
-    const SITE_NAME = "site_name";
-    const TITLE = "title";
-    const URL = "url";
-    const VIDEO = "video";
-    const VIDEO_URL = "video:url";
-    const VIDEO_SECURE_URL = "video:secure_url";
-    const VIDEO_TYPE = "video:type";
-    const VIDEO_WIDTH = "video:width";
-    const VIDEO_HEIGHT = "video:height";
-
     private $client;
 
     /**
@@ -101,134 +83,53 @@ class Crawler
     private function extractOpenGraphData($content)
     {
         $crawler = new SymfonyCrawler($content);
-        $page = new Website();
 
         // Get all meta-tags starting with "og:"
         $ogMetaTags = $crawler->filter("meta[property^='og:']");
 
-        // Walk all properties and attach to page
-        foreach ($ogMetaTags as $tag) {
-            $name = strtolower(trim(substr($tag->getAttribute("property"), 3)));
-            $value = trim($tag->getAttribute("content"));
+        // Create clean property array
+        $properties = Linq::from($ogMetaTags)
+            ->select(
+                function (\DOMElement $tag) {
+                    $name = strtolower(trim(substr($tag->getAttribute("property"), 3)));
+                    $value = trim($tag->getAttribute("content"));
+                    return new Property($name, $value);
+                }
+            )
+            ->toArray();
 
-            switch($name) {
-                case self::DESCRIPTION:
-                    if ($page->description === null) {
-                        $page->description = $value;
-                    }
-                    break;
-                case self::DETERMINER:
-                    if ($page->determiner === null) {
-                        $page->determiner = $value;
-                    }
-                    break;
-                case self::IMAGE:
-                case self::IMAGE_URL:
-                    $page->images[] = new Elements\Image($value);
-                    break;
-                case self::IMAGE_HEIGHT:
-                case self::IMAGE_SECURE_URL:
-                case self::IMAGE_TYPE:
-                case self::IMAGE_WIDTH:
-                    if (count($page->images) > 0) {
-                        $this->handleImageAttribute($page->images[count($page->images) - 1], $name, $value);
-                    } elseif ($this->debug) {
-                        throw new \UnexpectedValueException(printf("Found %0 property but no image was found before.", $name));
-                    }
-                    break;
-                case self::LOCALE:
-                    if ($page->locale === null) {
-                        $page->locale = $value;
-                    }
-                    break;
-                case self::LOCALE_ALTERNATE:
-                    $page->localeAlternate[] = $value;
-                    break;
-                case self::SITE_NAME:
-                    if ($page->siteName === null) {
-                        $page->siteName = $value;
-                    }
-                    break;
-                case self::TITLE:
-                    if ($page->title === null) {
-                        $page->title = $value;
-                    }
-                    break;
-                case self::URL:
-                    if ($page->url === null) {
-                        $page->url = $value;
-                    }
-                    break;
-                case self::VIDEO:
-                case self::VIDEO_URL:
-                    $page->videos[] = new Elements\Video($value);
-                    break;
-                case self::VIDEO_HEIGHT:
-                case self::VIDEO_SECURE_URL:
-                case self::VIDEO_TYPE:
-                case self::VIDEO_WIDTH:
-                    if (count($page->videos) > 0) {
-                        $this->handleVideoAttribute($page->videos[count($page->ideos) - 1], $name, $value);
-                    } elseif ($this->debug) {
-                        throw new \UnexpectedValueException(printf("Found %0 property but no video was found before.", $name));
-                    }
-            }
+        // Create new object of the correct type
+        $typeProperty = Linq::from($properties)
+            ->firstOrNull(
+                function (Property $property) {
+                    return $property->key === Property::TYPE;
+                }
+            );
+        switch ($typeProperty === null ? "website" : $typeProperty->value) {
+            default:
+                $object = new Website();
+                break;
         }
 
+        // Assign all properties to the object
+        $object->assignProperties($properties, $this->debug);
+
         // Fallback for title
-        if ($this->useFallbackMode && !$page->title) {
+        if ($this->useFallbackMode && !$object->title) {
             $titleElement = $crawler->filter("title")->first();
             if ($titleElement) {
-                $page->title = trim($titleElement->text());
+                $object->title = trim($titleElement->text());
             }
         }
 
         // Fallback for description
-        if ($this->useFallbackMode && !$page->description) {
+        if ($this->useFallbackMode && !$object->description) {
             $descriptionElement = $crawler->filter("meta[property='description']")->first();
             if ($descriptionElement) {
-                $page->description = trim($descriptionElement->attr("content"));
+                $object->description = trim($descriptionElement->attr("content"));
             }
         }
 
-        return $page;
-    }
-
-    private function handleImageAttribute(Elements\Image $element, $name, $value)
-    {
-        switch($name)
-        {
-            case self::IMAGE_HEIGHT:
-                $element->height = (int)$value;
-                break;
-            case self::IMAGE_WIDTH:
-                $element->width = (int)$value;
-                break;
-            case self::IMAGE_TYPE:
-                $element->type = $value;
-                break;
-            case self::IMAGE_SECURE_URL:
-                $element->secureUrl = $value;
-                break;
-        }
-    }
-
-    private function handleVideoAttribute(Elements\Video $element, $name, $value)
-    {
-        switch($name)
-        {
-            case self::VIDEO_HEIGHT:
-                $element->height = (int)$value;
-                break;
-            case self::VIDEO_WIDTH:
-                $element->width = (int)$value;
-                break;
-            case self::VIDEO_TYPE:
-                $element->type = $value;
-                break;
-            case self::VIDEO_SECURE_URL:
-                $element->secureUrl = $value;
-                break;
-        }
+        return $object;
     }
 }

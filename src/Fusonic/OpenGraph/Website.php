@@ -7,8 +7,12 @@ namespace Fusonic\OpenGraph;
  */
 class Website extends Object
 {
+    const TYPE = "website";
+
     public function __construct()
     {
         parent::__construct();
+
+        $this->type = self::TYPE;
     }
 }
