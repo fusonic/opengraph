@@ -25,6 +25,7 @@ class Property
     const SITE_NAME = "site_name";
     const TITLE = "title";
     const TYPE = "type";
+    const UPDATED_TIME = "updated_time";
     const URL = "url";
     const VIDEO = "video";
     const VIDEO_HEIGHT = "video:height";

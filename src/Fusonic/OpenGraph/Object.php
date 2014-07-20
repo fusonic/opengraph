@@ -60,6 +60,11 @@ abstract class Object
     public $type;
 
     /**
+     * @var \DateTime
+     */
+    public $updatedTime;
+
+    /**
      * @var string
      */
     public $url;
@@ -145,6 +150,11 @@ abstract class Object
                         $this->title = $value;
                     }
                     break;
+                case Property::UPDATED_TIME:
+                    if ($this->updatedTime === null) {
+                        $this->updatedTime = $this->convertToDateTime($value);
+                    }
+                    break;
                 case Property::URL:
                     if ($this->url === null) {
                         $this->url = $value;
@@ -216,6 +226,11 @@ abstract class Object
                 $element->secureUrl = $value;
                 break;
         }
+    }
+
+    private function convertToDateTime($value)
+    {
+        return new \DateTime($value);
     }
 
     /**
@@ -301,6 +316,10 @@ abstract class Object
 
         if ($this->type !== null) {
             $properties[] = new Property(Property::TYPE, $this->type);
+        }
+
+        if ($this->updatedTime !== null) {
+            $properties[] = new Property(Property::UPDATED_TIME, $this->updatedTime->format("c"));
         }
 
         if ($this->url !== null) {

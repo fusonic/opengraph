@@ -23,6 +23,7 @@ class CrawlerTestTest extends \PHPUnit_Framework_TestCase
 <meta property="og:see_also" content="https://github.com/fusonic/fusonic-spreadsheetexport">
 <meta property="og:site_name" content="Site name">
 <meta property="og:title" content="Title">
+<meta property="og:updated_time" content="2014-07-20T17:51:00+02:00">
 <meta property="og:url" content="https://github.com/fusonic/fusonic-opengraph">
 </head>
 <body></body>
@@ -42,6 +43,7 @@ LONG;
         $this->assertContains("https://github.com/fusonic/fusonic-spreadsheetexport", $res->seeAlso);
         $this->assertEquals("Site name", $res->siteName);
         $this->assertEquals("Title", $res->title);
+        $this->assertTrue($res->updatedTime instanceof \DateTime);
         $this->assertEquals("https://github.com/fusonic/fusonic-opengraph", $res->url);
     }
 
