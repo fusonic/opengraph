@@ -3,7 +3,8 @@
 namespace Fusonic\OpenGraph;
 
 /**
- * An Open Graph website object (http://graph.facebook.com/schema/og/website)
+ * An Open Graph website object.
+ * https://developers.facebook.com/docs/reference/opengraph/object-type/website/
  */
 class Website extends Object
 {

@@ -40,6 +40,11 @@ abstract class Object
     public $localeAlternate = [];
 
     /**
+     * @var array|string[]
+     */
+    public $seeAlso = [];
+
+    /**
      * @var string
      */
     public $siteName;
@@ -126,6 +131,9 @@ abstract class Object
                     break;
                 case Property::LOCALE_ALTERNATE:
                     $this->localeAlternate[] = $value;
+                    break;
+                case Property::SEE_ALSO:
+                    $this->seeAlso[] = $value;
                     break;
                 case Property::SITE_NAME:
                     if ($this->siteName === null) {
@@ -281,6 +289,10 @@ abstract class Object
 
         foreach ($this->localeAlternate as $locale) {
             $properties[] = new Property(Property::LOCALE_ALTERNATE, $locale);
+        }
+
+        foreach ($this->seeAlso as $seeAlso) {
+            $properties[] = new Property(Property::SEE_ALSO, $seeAlso);
         }
 
         if ($this->siteName !== null) {

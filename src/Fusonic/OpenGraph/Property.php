@@ -21,6 +21,7 @@ class Property
     const IMAGE_WIDTH = "image:width";
     const LOCALE = "locale";
     const LOCALE_ALTERNATE = "locale:alternate";
+    const SEE_ALSO = "see_also";
     const SITE_NAME = "site_name";
     const TITLE = "title";
     const TYPE = "type";

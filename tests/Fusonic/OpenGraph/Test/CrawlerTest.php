@@ -19,6 +19,8 @@ class CrawlerTestTest extends \PHPUnit_Framework_TestCase
 <meta property="og:locale" content="en_GB">
 <meta property="og:locale:alternate" content="en_US">
 <meta property="og:locale:alternate" content="de_AT">
+<meta property="og:see_also" content="https://github.com/fusonic/fusonic-linq">
+<meta property="og:see_also" content="https://github.com/fusonic/fusonic-spreadsheetexport">
 <meta property="og:site_name" content="Site name">
 <meta property="og:title" content="Title">
 <meta property="og:url" content="https://github.com/fusonic/fusonic-opengraph">
@@ -36,6 +38,8 @@ LONG;
         $this->assertEquals("en_GB", $res->locale);
         $this->assertContains("en_US", $res->localeAlternate);
         $this->assertContains("de_AT", $res->localeAlternate);
+        $this->assertContains("https://github.com/fusonic/fusonic-linq", $res->seeAlso);
+        $this->assertContains("https://github.com/fusonic/fusonic-spreadsheetexport", $res->seeAlso);
         $this->assertEquals("Site name", $res->siteName);
         $this->assertEquals("Title", $res->title);
         $this->assertEquals("https://github.com/fusonic/fusonic-opengraph", $res->url);
