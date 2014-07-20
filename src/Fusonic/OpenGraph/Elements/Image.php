@@ -61,7 +61,7 @@ class Image extends Element
      */
     public function getProperties()
     {
-        $properties = array();
+        $properties = [];
 
         // URL must precede all other properties
         if ($this->url !== null) {

@@ -12,7 +12,7 @@ abstract class Object
     /**
      * @var array|Elements\Audio[]
      */
-    public $audios = array();
+    public $audios = [];
 
     /**
      * @var string
@@ -27,7 +27,7 @@ abstract class Object
     /**
      * @var array|Elements\Image[]
      */
-    public $images = array();
+    public $images = [];
 
     /**
      * @var string
@@ -37,7 +37,7 @@ abstract class Object
     /**
      * @var array|string[]
      */
-    public $localeAlternate = array();
+    public $localeAlternate = [];
 
     /**
      * @var string
@@ -62,7 +62,7 @@ abstract class Object
     /**
      * @var array|Elements\Video[]
      */
-    public $videos = array();
+    public $videos = [];
 
     public function __construct()
     {
@@ -257,7 +257,7 @@ abstract class Object
      */
     public function getProperties()
     {
-        $properties = array();
+        $properties = [];
 
         foreach ($this->audios as $audio) {
             $properties = array_merge($properties, $audio->getProperties());
