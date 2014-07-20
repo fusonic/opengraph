@@ -9,7 +9,7 @@ See [ogp.me](http://ogp.me) for information on the Open Graph protocol.
 
 ## Requirements
 
-* PHP 5.3 and up
+* PHP 5.4 and up
 * [fusonic/linq](https://github.com/fusonic/fusonic-linq)
 * [guzzlehttp/guzzle](https://github.com/guzzle/guzzle)
 * [symfony/css-selector](https://github.com/symfony/CssSelector)
