@@ -10,6 +10,11 @@ use Fusonic\Linq\Linq;
 abstract class Object
 {
     /**
+     * @var array|Elements\Audio[]
+     */
+    public $audios = array();
+
+    /**
      * @var string
      */
     public $description;
@@ -78,6 +83,18 @@ abstract class Object
             $value = $property->value;
 
             switch($name) {
+                case Property::AUDIO:
+                case Property::AUDIO_URL:
+                    $this->audios[] = new Elements\Audio($value);
+                    break;
+                case Property::AUDIO_SECURE_URL:
+                case Property::AUDIO_TYPE:
+                    if (count($this->audios) > 0) {
+                        $this->handleAudioAttribute($this->audios[count($this->audios) - 1], $name, $value);
+                    } elseif ($debug) {
+                        throw new \UnexpectedValueException(sprintf("Found '%s' property but no audio was found before.", $name));
+                    }
+                    break;
                 case Property::DESCRIPTION:
                     if ($this->description === null) {
                         $this->description = $value;
@@ -175,6 +192,19 @@ abstract class Object
                 $element->type = $value;
                 break;
             case Property::VIDEO_SECURE_URL:
+                $element->secureUrl = $value;
+                break;
+        }
+    }
+
+    private function handleAudioAttribute(Elements\Audio $element, $name, $value)
+    {
+        switch($name)
+        {
+            case Property::AUDIO_TYPE:
+                $element->type = $value;
+                break;
+            case Property::AUDIO_SECURE_URL:
                 $element->secureUrl = $value;
                 break;
         }
