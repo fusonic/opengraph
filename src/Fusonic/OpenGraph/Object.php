@@ -259,6 +259,10 @@ abstract class Object
     {
         $properties = array();
 
+        foreach ($this->audios as $audio) {
+            $properties = array_merge($properties, $audio->getProperties());
+        }
+
         if ($this->description !== null) {
             $properties[] = new Property(Property::DESCRIPTION, $this->description);
         }

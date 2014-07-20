@@ -105,7 +105,7 @@ class Crawler
                     return $property->key === Property::TYPE;
                 }
             );
-        switch ($typeProperty === null ? "website" : $typeProperty->value) {
+        switch ($typeProperty !== null ? $typeProperty->value : null) {
             default:
                 $object = new Website();
                 break;

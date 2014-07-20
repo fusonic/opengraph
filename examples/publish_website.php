@@ -1,6 +1,8 @@
 <?php
 
+use Fusonic\OpenGraph\Elements\Audio;
 use Fusonic\OpenGraph\Elements\Image;
+use Fusonic\OpenGraph\Elements\Video;
 use Fusonic\OpenGraph\Website;
 
 if (!$loader = @include __DIR__.'/../vendor/autoload.php') {
@@ -25,6 +27,18 @@ $image->width = 140;
 $image->height = 41;
 $image->type = "image/png";
 $website->images[] = $image;
+
+// Attach a video
+$video = new Video("http://www.fusonic.net/en/we-dont-have-no-video.mp4");
+$video->width = 1920;
+$video->height = 1080;
+$video->type = "video/mp4";
+$website->videos[] = $video;
+
+// Attach an audio
+$audio = new Audio("http://www.fusonic.net/en/we-dont-have-no-audio.mp3");
+$audio->type = "audio/mp3";
+$website->audios[] = $audio;
 
 // Now render all tags
 echo $website->getHtml();
