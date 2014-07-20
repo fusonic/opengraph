@@ -40,6 +40,11 @@ abstract class Object
     public $localeAlternate = [];
 
     /**
+     * @var bool
+     */
+    public $richAttachment;
+
+    /**
      * @var array|string[]
      */
     public $seeAlso = [];
@@ -137,6 +142,9 @@ abstract class Object
                 case Property::LOCALE_ALTERNATE:
                     $this->localeAlternate[] = $value;
                     break;
+                case Property::RICH_ATTACHMENT:
+                    $this->richAttachment = $this->convertToBoolean($value);
+                    break;
                 case Property::SEE_ALSO:
                     $this->seeAlso[] = $value;
                     break;
@@ -228,9 +236,21 @@ abstract class Object
         }
     }
 
-    private function convertToDateTime($value)
+    protected function convertToDateTime($value)
     {
         return new \DateTime($value);
+    }
+
+    protected function convertToBoolean($value)
+    {
+        switch(strtolower($value))
+        {
+            case "1":
+            case "true":
+                return true;
+            default:
+                return false;
+        }
     }
 
     /**
@@ -304,6 +324,10 @@ abstract class Object
 
         foreach ($this->localeAlternate as $locale) {
             $properties[] = new Property(Property::LOCALE_ALTERNATE, $locale);
+        }
+
+        if ($this->richAttachment !== null) {
+            $properties[] = new Property(Property::RICH_ATTACHMENT, (int)$this->richAttachment);
         }
 
         foreach ($this->seeAlso as $seeAlso) {
