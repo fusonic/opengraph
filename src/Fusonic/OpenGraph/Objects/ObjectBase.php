@@ -266,7 +266,7 @@ abstract class ObjectBase
     {
         return Linq::from($this->images)
             ->orderByDescending(
-                function (Elements\Image $image) {
+                function (Image $image) {
                     return $image->width * $image->height;
                 }
             )
@@ -285,12 +285,12 @@ abstract class ObjectBase
     {
         return Linq::from($this->images)
             ->where(
-                function (Elements\Image $image) use ($minWidth, $minHeight) {
+                function (Image $image) use ($minWidth, $minHeight) {
                     return $image->width >= $minWidth && $image->height >= $minHeight;
                 }
             )
             ->orderBy(
-                function (Elements\Image $image) {
+                function (Image $image) {
                     return $image->width * $image->height;
                 }
             )
@@ -359,16 +359,5 @@ abstract class ObjectBase
         }
 
         return $properties;
-    }
-
-    public function getHtml()
-    {
-        $html = "";
-
-        foreach ($this->getProperties() as $property) {
-            $html .= sprintf("<meta property=\"%s\" content=\"%s\">\n", $property->key, htmlspecialchars($property->value));
-        }
-
-        return $html;
     }
 }
