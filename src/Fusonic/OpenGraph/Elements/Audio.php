@@ -7,7 +7,7 @@ use Fusonic\OpenGraph\Property;
 /**
  * An Open Graph audio element.
  */
-class Audio extends Element
+class Audio extends ElementBase
 {
     /**
      * URL for the audio. May be SSL-secured or not.

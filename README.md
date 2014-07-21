@@ -43,8 +43,8 @@ require "vendor/autoload.php";
 ### Retrieve Open Graph data from a URL
 
 ``` php
-$crawler = new Fusonic\OpenGraph\Crawler();
-$object = $crawler->crawlUrl("https://github.com");
+$crawler = new Fusonic\OpenGraph\Consumer();
+$object = $crawler->loadUrl("https://github.com");
 
 echo $object->title . " (" . $object->siteName . ")";
 echo $object->images[0]->src;

@@ -1,10 +1,10 @@
 <?php
 
-namespace Fusonic\OpenGraph\Test;
+namespace Fusonic\OpenGraph\Objects\Test;
 
-use Fusonic\OpenGraph\Crawler;
+use Fusonic\OpenGraph\Consumer;
 
-class CrawlerTestTest extends \PHPUnit_Framework_TestCase
+class ConsumerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Checks crawler to read basic properties.
@@ -31,9 +31,9 @@ class CrawlerTestTest extends \PHPUnit_Framework_TestCase
 </html>
 LONG;
 
-        $crawler = new Crawler();
+        $consumer = new Consumer();
 
-        $res = $crawler->crawlHtml($content, "about:blank");
+        $res = $consumer->loadHtml($content, "about:blank");
 
         $this->assertEquals("Description", $res->description);
         $this->assertEquals("auto", $res->determiner);
@@ -64,9 +64,9 @@ LONG;
 </html>
 LONG;
 
-        $crawler = new Crawler();
+        $consumer = new Consumer();
 
-        $res = $crawler->crawlHtml($content, "about:blank");
+        $res = $consumer->loadHtml($content, "about:blank");
 
         $this->assertNull($res->description);
         $this->assertNull($res->title);
@@ -88,10 +88,10 @@ LONG;
 </html>
 LONG;
 
-        $crawler = new Crawler();
-        $crawler->useFallbackMode = true;
+        $consumer = new Consumer();
+        $consumer->useFallbackMode = true;
 
-        $res = $crawler->crawlHtml($content, "about:blank");
+        $res = $consumer->loadHtml($content, "about:blank");
 
         $this->assertEquals("Description", $res->description);
         $this->assertEquals("Title", $res->title);
@@ -118,9 +118,9 @@ LONG;
 </html>
 LONG;
 
-        $crawler = new Crawler();
+        $consumer = new Consumer();
 
-        $res = $crawler->crawlHtml($content);
+        $res = $consumer->loadHtml($content);
 
         $this->assertEquals(3, count($res->images));
         $this->assertEquals("http://example.com/rock.jpg", $res->images[0]->url);
@@ -149,9 +149,9 @@ LONG;
 </html>
 LONG;
 
-        $crawler = new Crawler();
+        $consumer = new Consumer();
 
-        $res = $crawler->crawlHtml($content);
+        $res = $consumer->loadHtml($content);
 
         $this->assertEquals(1, count($res->images));
         $this->assertEquals("http://example.com/rock.jpg", $res->images[0]->url);
@@ -176,9 +176,9 @@ LONG;
 </html>
 LONG;
 
-        $crawler = new Crawler();
+        $consumer = new Consumer();
 
-        $res = $crawler->crawlHtml($content);
+        $res = $consumer->loadHtml($content);
 
         $this->assertEquals(1, count($res->videos));
         $this->assertEquals("http://example.com/rock.ogv", $res->videos[0]->url);
@@ -201,9 +201,9 @@ LONG;
 </html>
 LONG;
 
-        $crawler = new Crawler();
+        $consumer = new Consumer();
 
-        $res = $crawler->crawlHtml($content);
+        $res = $consumer->loadHtml($content);
 
         $this->assertEquals(1, count($res->audios));
         $this->assertEquals("http://example.com/rock.mp3", $res->audios[0]->url);
@@ -222,9 +222,9 @@ LONG;
 </html>
 LONG;
 
-        $crawler = new Crawler();
+        $consumer = new Consumer();
 
-        $res = $crawler->crawlHtml($content);
+        $res = $consumer->loadHtml($content);
 
         $this->assertEquals(0, count($res->images));
     }
@@ -243,10 +243,10 @@ LONG;
 </html>
 LONG;
 
-        $crawler = new Crawler();
-        $crawler->debug = true;
+        $consumer = new Consumer();
+        $consumer->debug = true;
 
-        $res = $crawler->crawlHtml($content);
+        $res = $consumer->loadHtml($content);
     }
 
     public function testCrawlHtmlVideoExceptionDebugOff()
@@ -260,9 +260,9 @@ LONG;
 </html>
 LONG;
 
-        $crawler = new Crawler();
+        $consumer = new Consumer();
 
-        $res = $crawler->crawlHtml($content);
+        $res = $consumer->loadHtml($content);
 
         $this->assertEquals(0, count($res->videos));
     }
@@ -281,10 +281,10 @@ LONG;
 </html>
 LONG;
 
-        $crawler = new Crawler();
-        $crawler->debug = true;
+        $consumer = new Consumer();
+        $consumer->debug = true;
 
-        $res = $crawler->crawlHtml($content);
+        $res = $consumer->loadHtml($content);
     }
 
     public function testCrawlHtmlAudioExceptionDebugOff()
@@ -298,9 +298,9 @@ LONG;
 </html>
 LONG;
 
-        $crawler = new Crawler();
+        $consumer = new Consumer();
 
-        $res = $crawler->crawlHtml($content);
+        $res = $consumer->loadHtml($content);
 
         $this->assertEquals(0, count($res->audios));
     }
@@ -319,9 +319,9 @@ LONG;
 </html>
 LONG;
 
-        $crawler = new Crawler();
-        $crawler->debug = true;
+        $consumer = new Consumer();
+        $consumer->debug = true;
 
-        $res = $crawler->crawlHtml($content);
+        $res = $consumer->loadHtml($content);
     }
 }

@@ -7,7 +7,7 @@ use Fusonic\OpenGraph\Property;
 /**
  * An OpenGraph video element.
  */
-class Video extends Element
+class Video extends ElementBase
 {
     /**
      * URL for the video. May be SSL-secured or not.

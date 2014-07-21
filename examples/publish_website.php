@@ -3,7 +3,7 @@
 use Fusonic\OpenGraph\Elements\Audio;
 use Fusonic\OpenGraph\Elements\Image;
 use Fusonic\OpenGraph\Elements\Video;
-use Fusonic\OpenGraph\Website;
+use Fusonic\OpenGraph\Objects\Website;
 
 if (!$loader = @include __DIR__.'/../vendor/autoload.php') {
     die('You must set up the project dependencies, run the following commands:'.PHP_EOL.

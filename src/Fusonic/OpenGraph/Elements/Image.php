@@ -7,7 +7,7 @@ use Fusonic\OpenGraph\Property;
 /**
  * An Open Graph image element.
  */
-class Image extends Element
+class Image extends ElementBase
 {
     /**
      * URL for the image. May be SSL-secured or not.

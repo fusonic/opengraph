@@ -1,16 +1,20 @@
 <?php
 
-namespace Fusonic\OpenGraph;
+namespace Fusonic\OpenGraph\Objects;
 
 use Fusonic\Linq\Linq;
+use Fusonic\OpenGraph\Elements\Audio;
+use Fusonic\OpenGraph\Elements\Image;
+use Fusonic\OpenGraph\Elements\Video;
+use Fusonic\OpenGraph\Property;
 
 /**
  * Abstract base class for all Open Graph objects (website, video, ...)
  */
-abstract class Object
+abstract class ObjectBase
 {
     /**
-     * @var array|Elements\Audio[]
+     * @var array|Audio[]
      */
     public $audios = [];
 
@@ -25,7 +29,7 @@ abstract class Object
     public $determiner;
 
     /**
-     * @var array|Elements\Image[]
+     * @var array|Image[]
      */
     public $images = [];
 
@@ -75,7 +79,7 @@ abstract class Object
     public $url;
 
     /**
-     * @var array|Elements\Video[]
+     * @var array|Video[]
      */
     public $videos = [];
 
@@ -100,7 +104,7 @@ abstract class Object
             switch($name) {
                 case Property::AUDIO:
                 case Property::AUDIO_URL:
-                    $this->audios[] = new Elements\Audio($value);
+                    $this->audios[] = new Audio($value);
                     break;
                 case Property::AUDIO_SECURE_URL:
                 case Property::AUDIO_TYPE:
@@ -122,7 +126,7 @@ abstract class Object
                     break;
                 case Property::IMAGE:
                 case Property::IMAGE_URL:
-                    $this->images[] = new Elements\Image($value);
+                    $this->images[] = new Image($value);
                     break;
                 case Property::IMAGE_HEIGHT:
                 case Property::IMAGE_SECURE_URL:
@@ -170,7 +174,7 @@ abstract class Object
                     break;
                 case Property::VIDEO:
                 case Property::VIDEO_URL:
-                    $this->videos[] = new Elements\Video($value);
+                    $this->videos[] = new Video($value);
                     break;
                 case Property::VIDEO_HEIGHT:
                 case Property::VIDEO_SECURE_URL:
@@ -185,7 +189,7 @@ abstract class Object
         }
     }
 
-    private function handleImageAttribute(Elements\Image $element, $name, $value)
+    private function handleImageAttribute(Image $element, $name, $value)
     {
         switch($name)
         {
@@ -204,7 +208,7 @@ abstract class Object
         }
     }
 
-    private function handleVideoAttribute(Elements\Video $element, $name, $value)
+    private function handleVideoAttribute(Video $element, $name, $value)
     {
         switch($name)
         {
@@ -223,7 +227,7 @@ abstract class Object
         }
     }
 
-    private function handleAudioAttribute(Elements\Audio $element, $name, $value)
+    private function handleAudioAttribute(Audio $element, $name, $value)
     {
         switch($name)
         {
@@ -256,7 +260,7 @@ abstract class Object
     /**
      * Returns the largest of all images found or NULL.
      *
-     * @return  Elements\Image
+     * @return  Image
      */
     public function getLargestImage()
     {
@@ -275,7 +279,7 @@ abstract class Object
      * @param   int     $minWidth       Minimum width of the image.
      * @param   int     $minHeight      Minimum height of the image.
      *
-     * @return  Elements\Image
+     * @return  Image
      */
     public function getImage($minWidth, $minHeight)
     {

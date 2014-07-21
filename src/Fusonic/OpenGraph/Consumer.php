@@ -3,15 +3,16 @@
 namespace Fusonic\OpenGraph;
 
 use Fusonic\Linq\Linq;
+use Fusonic\OpenGraph\Objects\ObjectBase;
+use Fusonic\OpenGraph\Objects\Website;
 use GuzzleHttp\Adapter\AdapterInterface;
 use GuzzleHttp\Client;
-use GuzzleHttp\Stream\functionsTest;
-use Symfony\Component\DomCrawler\Crawler as SymfonyCrawler;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Crawler that extracts Open Graph data from either a URL or a HTML string.
  */
-class Crawler
+class Consumer
 {
     private $client;
 
@@ -50,12 +51,12 @@ class Crawler
      *
      * @return  Website
      */
-    public function crawlUrl($url)
+    public function loadUrl($url)
     {
         // Fetch HTTP content using Guzzle
         $response = $this->client->get($url);
 
-        return $this->crawlHtml($response->getBody()->__toString(), $url);
+        return $this->loadHtml($response->getBody()->__toString(), $url);
     }
 
     /**
@@ -64,9 +65,9 @@ class Crawler
      * @param   string  $html           HTML string, usually whole content of crawled web resource.
      * @param   string  $fallbackUrl    URL to use when fallback mode is enabled.
      *
-     * @return  Object
+     * @return  ObjectBase
      */
-    public function crawlHtml($html, $fallbackUrl = null)
+    public function loadHtml($html, $fallbackUrl = null)
     {
         // Extract all data that can be found
         $page = $this->extractOpenGraphData($html);
@@ -82,7 +83,7 @@ class Crawler
 
     private function extractOpenGraphData($content)
     {
-        $crawler = new SymfonyCrawler($content);
+        $crawler = new Crawler($content);
 
         // Get all meta-tags starting with "og:"
         $ogMetaTags = $crawler->filter("meta[property^='og:']");

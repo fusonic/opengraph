@@ -1,12 +1,12 @@
 <?php
 
-namespace Fusonic\OpenGraph;
+namespace Fusonic\OpenGraph\Objects;
 
 /**
  * An Open Graph website object.
  * https://developers.facebook.com/docs/reference/opengraph/object-type/website/
  */
-class Website extends Object
+class Website extends ObjectBase
 {
     const TYPE = "website";
 
