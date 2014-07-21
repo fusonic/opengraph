@@ -362,7 +362,7 @@ abstract class Object
         $html = "";
 
         foreach ($this->getProperties() as $property) {
-            $html .= sprintf("<meta property=\"og:%s\" content=\"%s\">\n", $property->key, htmlspecialchars($property->value));
+            $html .= sprintf("<meta property=\"%s\" content=\"%s\">\n", $property->key, htmlspecialchars($property->value));
         }
 
         return $html;

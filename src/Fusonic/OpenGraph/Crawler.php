@@ -91,7 +91,7 @@ class Crawler
         $properties = Linq::from($ogMetaTags)
             ->select(
                 function (\DOMElement $tag) {
-                    $name = strtolower(trim(substr($tag->getAttribute("property"), 3)));
+                    $name = strtolower(trim($tag->getAttribute("property")));
                     $value = trim($tag->getAttribute("content"));
                     return new Property($name, $value);
                 }

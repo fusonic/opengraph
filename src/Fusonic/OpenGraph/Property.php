@@ -7,33 +7,33 @@ namespace Fusonic\OpenGraph;
  */
 class Property
 {
-    const AUDIO = "audio";
-    const AUDIO_SECURE_URL = "audio:secure_url";
-    const AUDIO_TYPE = "audio:type";
-    const AUDIO_URL = "audio:url";
-    const DESCRIPTION = "description";
-    const DETERMINER = "determiner";
-    const IMAGE = "image";
-    const IMAGE_HEIGHT = "image:height";
-    const IMAGE_SECURE_URL = "image:secure_url";
-    const IMAGE_TYPE = "image:type";
-    const IMAGE_URL = "image:url";
-    const IMAGE_WIDTH = "image:width";
-    const LOCALE = "locale";
-    const LOCALE_ALTERNATE = "locale:alternate";
-    const RICH_ATTACHMENT = "rich_attachment";
-    const SEE_ALSO = "see_also";
-    const SITE_NAME = "site_name";
-    const TITLE = "title";
-    const TYPE = "type";
-    const UPDATED_TIME = "updated_time";
-    const URL = "url";
-    const VIDEO = "video";
-    const VIDEO_HEIGHT = "video:height";
-    const VIDEO_SECURE_URL = "video:secure_url";
-    const VIDEO_TYPE = "video:type";
-    const VIDEO_URL = "video:url";
-    const VIDEO_WIDTH = "video:width";
+    const AUDIO = "og:audio";
+    const AUDIO_SECURE_URL = "og:audio:secure_url";
+    const AUDIO_TYPE = "og:audio:type";
+    const AUDIO_URL = "og:audio:url";
+    const DESCRIPTION = "og:description";
+    const DETERMINER = "og:determiner";
+    const IMAGE = "og:image";
+    const IMAGE_HEIGHT = "og:image:height";
+    const IMAGE_SECURE_URL = "og:image:secure_url";
+    const IMAGE_TYPE = "og:image:type";
+    const IMAGE_URL = "og:image:url";
+    const IMAGE_WIDTH = "og:image:width";
+    const LOCALE = "og:locale";
+    const LOCALE_ALTERNATE = "og:locale:alternate";
+    const RICH_ATTACHMENT = "og:rich_attachment";
+    const SEE_ALSO = "og:see_also";
+    const SITE_NAME = "og:site_name";
+    const TITLE = "og:title";
+    const TYPE = "og:type";
+    const UPDATED_TIME = "og:updated_time";
+    const URL = "og:url";
+    const VIDEO = "og:video";
+    const VIDEO_HEIGHT = "og:video:height";
+    const VIDEO_SECURE_URL = "og:video:secure_url";
+    const VIDEO_TYPE = "og:video:type";
+    const VIDEO_URL = "og:video:url";
+    const VIDEO_WIDTH = "og:video:width";
 
     /**
      * Key of the property without "og:" prefix.
