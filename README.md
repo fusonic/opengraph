@@ -3,7 +3,9 @@
 [![Build Status](https://travis-ci.org/fusonic/fusonic-opengraph.png)](https://travis-ci.org/fusonic/fusonic-opengraph)
 [![Total Downloads](https://poser.pugx.org/fusonic/opengraph/downloads.png)](https://packagist.org/packages/fusonic/opengraph)
 
-fusonic-opengraph is a simple library to read Open Graph data from the web. It also supports an optional fallback mode to provide basic meta data for pages that do not implement the Open Graph protocol.
+A simple library to read Open Graph data from the web and generate HTML code to publish your own Open Graph objects. A fallback mode enables you to read data from websites that do not implement the Open Graph protocol.
+
+Using this library you can easily retrieve stuff like meta data, video information from YouTube or Vimeo or image information from Flickr without using site-specific APIs since they all implement the Open Graph protocol.
 
 See [ogp.me](http://ogp.me) for information on the Open Graph protocol.
 
