@@ -1,6 +1,6 @@
-# fusonic-opengraph
+# fusonic/opengraph
 
-[![Build Status](https://travis-ci.org/fusonic/fusonic-opengraph.png)](https://travis-ci.org/fusonic/fusonic-opengraph)
+[![Build Status](https://travis-ci.org/fusonic/opengraph.png)](https://travis-ci.org/fusonic/opengraph)
 [![Total Downloads](https://poser.pugx.org/fusonic/opengraph/downloads.png)](https://packagist.org/packages/fusonic/opengraph)
 
 A simple library to read Open Graph data from the web and generate HTML code to publish your own Open Graph objects. A fallback mode enables you to read data from websites that do not implement the Open Graph protocol.
@@ -12,7 +12,7 @@ See [ogp.me](http://ogp.me) for information on the Open Graph protocol.
 ## Requirements
 
 * PHP 5.4 and up
-* [fusonic/linq](https://github.com/fusonic/fusonic-linq)
+* [fusonic/linq](https://github.com/fusonic/linq)
 * [guzzlehttp/guzzle](https://github.com/guzzle/guzzle)
 * [symfony/css-selector](https://github.com/symfony/CssSelector)
 * [symfony/dom-crawler](https://github.com/symfony/DomCrawler)
