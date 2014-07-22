@@ -19,6 +19,7 @@ class Property
     const IMAGE_TYPE = "og:image:type";
     const IMAGE_URL = "og:image:url";
     const IMAGE_WIDTH = "og:image:width";
+    const IMAGE_USER_GENERATED = "og:image:user_generated";
     const LOCALE = "og:locale";
     const LOCALE_ALTERNATE = "og:locale:alternate";
     const RICH_ATTACHMENT = "og:rich_attachment";

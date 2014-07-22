@@ -10,7 +10,7 @@ use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
- * Crawler that extracts Open Graph data from either a URL or a HTML string.
+ * Consumer that extracts Open Graph data from either a URL or a HTML string.
  */
 class Consumer
 {

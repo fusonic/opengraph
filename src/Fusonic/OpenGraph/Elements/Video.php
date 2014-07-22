@@ -10,35 +10,35 @@ use Fusonic\OpenGraph\Property;
 class Video extends ElementBase
 {
     /**
-     * URL for the video. May be SSL-secured or not.
+     * The URL of a video resource associated with the object.
      *
      * @var string
      */
     public $url;
 
     /**
-     * SSL-secured URL of the video or NULL.
+     * An alternate URL to use if a video resource requires HTTPS.
      *
      * @var string
      */
     public $secureUrl;
 
     /**
-     * Mime-type of the video or NULL.
+     * The MIME type of a video resource associated with the object.
      *
      * @var type
      */
     public $type;
 
     /**
-     * Width of the video or NULL.
+     * The width of a video resource associated with the object in pixels.
      *
      * @var int
      */
     public $width;
 
     /**
-     * Height of the video or NULL.
+     * The height of a video resource associated with the object in pixels.
      *
      * @var int
      */

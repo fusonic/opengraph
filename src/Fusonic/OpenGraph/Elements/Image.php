@@ -10,39 +10,46 @@ use Fusonic\OpenGraph\Property;
 class Image extends ElementBase
 {
     /**
-     * URL for the image. May be SSL-secured or not.
+     * The URL of an image resource associated with the object.
      *
      * @var string
      */
     public $url;
 
     /**
-     * SSL-secured URL of the image or NULL.
+     * An alternate URL to use if an image resource requires HTTPS.
      *
      * @var string
      */
     public $secureUrl;
 
     /**
-     * Mime-type of the image or NULL.
+     * The MIME type of an image resource.
      *
      * @var type
      */
     public $type;
 
     /**
-     * Width of the image or NULL.
+     * The width of an image resource in pixels.
      *
      * @var int
      */
     public $width;
 
     /**
-     * Height of the image or NULL.
+     * The height of an image resource in pixels.
      *
      * @var int
      */
     public $height;
+
+    /**
+     * Whether the image is user-generated or not.
+     *
+     * @var bool
+     */
+    public $userGenerated;
 
     /**
      * @param   string      $url            URL to the image file.
@@ -82,6 +89,10 @@ class Image extends ElementBase
 
         if ($this->width !== null) {
             $properties[] = new Property(Property::IMAGE_WIDTH, $this->width);
+        }
+
+        if ($this->userGenerated !== null) {
+            $properties[] = new Property(Property::IMAGE_USER_GENERATED, $this->userGenerated);
         }
 
         return $properties;

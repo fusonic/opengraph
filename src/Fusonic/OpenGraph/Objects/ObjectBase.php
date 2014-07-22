@@ -14,31 +14,45 @@ use Fusonic\OpenGraph\Property;
 abstract class ObjectBase
 {
     /**
+     * An array of audio resources attached to the object.
+     *
      * @var array|Audio[]
      */
     public $audios = [];
 
     /**
+     * A short description of the object.
+     *
      * @var string
      */
     public $description;
 
     /**
+     * The word that appears before the object's title in a sentence. This is an list of words from 'a', 'an', 'the',
+     * ' "" ', or 'auto'. If 'auto' is chosen, the consumer of the object will chose between 'a' or 'an'. The default is
+     * the blank, "".
+     *
      * @var string
      */
     public $determiner;
 
     /**
+     * An array of images attached to the object.
+     *
      * @var array|Image[]
      */
     public $images = [];
 
     /**
+     * The locale that the object's tags are marked up in, in the format language_TERRITORY.
+     *
      * @var string
      */
     public $locale;
 
     /**
+     * An array of alternate locales in which the resource is available.
+     *
      * @var array|string[]
      */
     public $localeAlternate = [];
@@ -49,36 +63,50 @@ abstract class ObjectBase
     public $richAttachment;
 
     /**
+     * An array of URLs of related resources.
+     *
      * @var array|string[]
      */
     public $seeAlso = [];
 
     /**
+     * The name of the web site upon which the object resides.
+     *
      * @var string
      */
     public $siteName;
 
     /**
+     * The title of the object as it should appear in the graph.
+     *
      * @var string
      */
     public $title;
 
     /**
+     * The type of the object, such as 'article'.
+     *
      * @var string
      */
     public $type;
 
     /**
+     * The time when the object was last updated.
+     *
      * @var \DateTime
      */
     public $updatedTime;
 
     /**
+     * The canonical URL of the object, used as its ID in the graph.
+     *
      * @var string
      */
     public $url;
 
     /**
+     * An array of videos attached to the object.
+     *
      * @var array|Video[]
      */
     public $videos = [];
@@ -111,7 +139,12 @@ abstract class ObjectBase
                     if (count($this->audios) > 0) {
                         $this->handleAudioAttribute($this->audios[count($this->audios) - 1], $name, $value);
                     } elseif ($debug) {
-                        throw new \UnexpectedValueException(sprintf("Found '%s' property but no audio was found before.", $name));
+                        throw new \UnexpectedValueException(
+                            sprintf(
+                                "Found '%s' property but no audio was found before.",
+                                $name
+                            )
+                        );
                     }
                     break;
                 case Property::DESCRIPTION:
@@ -132,10 +165,16 @@ abstract class ObjectBase
                 case Property::IMAGE_SECURE_URL:
                 case Property::IMAGE_TYPE:
                 case Property::IMAGE_WIDTH:
+                case Property::IMAGE_USER_GENERATED:
                     if (count($this->images) > 0) {
                         $this->handleImageAttribute($this->images[count($this->images) - 1], $name, $value);
                     } elseif ($debug) {
-                        throw new \UnexpectedValueException(sprintf("Found '%s' property but no image was found before.", $name));
+                        throw new \UnexpectedValueException(
+                            sprintf(
+                                "Found '%s' property but no image was found before.",
+                                $name
+                            )
+                        );
                     }
                     break;
                 case Property::LOCALE:
@@ -183,7 +222,12 @@ abstract class ObjectBase
                     if (count($this->videos) > 0) {
                         $this->handleVideoAttribute($this->videos[count($this->videos) - 1], $name, $value);
                     } elseif ($debug) {
-                        throw new \UnexpectedValueException(sprintf("Found '%s' property but no video was found before.", $name));
+                        throw new \UnexpectedValueException(
+                            sprintf(
+                                "Found '%s' property but no video was found before.",
+                                $name
+                            )
+                        );
                     }
             }
         }
@@ -204,6 +248,9 @@ abstract class ObjectBase
                 break;
             case Property::IMAGE_SECURE_URL:
                 $element->secureUrl = $value;
+                break;
+            case Property::IMAGE_USER_GENERATED:
+                $element->userGenerated = $this->convertToBoolean($value);
                 break;
         }
     }

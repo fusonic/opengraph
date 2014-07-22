@@ -9,7 +9,7 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
     /**
      * Checks crawler to read basic properties.
      */
-    public function testCrawlContentBasics()
+    public function testLoadHtmlBasics()
     {
         $content = <<<LONG
 <html>
@@ -52,7 +52,7 @@ LONG;
     /**
      * Checks crawler not to use fallback if disabled even if no OG data is provided.
      */
-    public function testCrawlContentFallbacksOff()
+    public function testLoadHtmlFallbacksOff()
     {
         $content = <<<LONG
 <html>
@@ -76,7 +76,7 @@ LONG;
     /**
      * Checks crawler to correctly use fallback elements when activated.
      */
-    public function testCrawlContentFallbacksOn()
+    public function testLoadHtmlFallbacksOn()
     {
         $content = <<<LONG
 <html>
@@ -102,7 +102,7 @@ LONG;
      * Checks crawler to handle arrays of elements with child-properties like described in the
      * Open Graph documentation (http://ogp.me/#array).
      */
-    public function testCrawlContentArrayHandling()
+    public function testLoadHtmlArrayHandling()
     {
         $content = <<<LONG
 <html>
@@ -134,7 +134,7 @@ LONG;
         $this->assertEquals(1000, $res->images[2]->height);
     }
 
-    public function testCrawlContentImages()
+    public function testLoadHtmlImages()
     {
         $content = <<<LONG
 <html>
@@ -161,7 +161,7 @@ LONG;
         $this->assertEquals("image/jpg", $res->images[0]->type);
     }
 
-    public function testCrawlContentVideos()
+    public function testLoadHtmlVideos()
     {
         $content = <<<LONG
 <html>
@@ -188,7 +188,7 @@ LONG;
         $this->assertEquals("video/ogv", $res->videos[0]->type);
     }
 
-    public function testCrawlContentAudios()
+    public function testLoadHtmlAudios()
     {
         $content = <<<LONG
 <html>

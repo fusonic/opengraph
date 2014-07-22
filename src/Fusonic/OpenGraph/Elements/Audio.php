@@ -10,21 +10,21 @@ use Fusonic\OpenGraph\Property;
 class Audio extends ElementBase
 {
     /**
-     * URL for the audio. May be SSL-secured or not.
+     * The URL of an audio resource associated with the object.
      *
      * @var string
      */
     public $url;
 
     /**
-     * SSL-secured URL of the audio or NULL.
+     * An alternate URL to use if an audio resource requires HTTPS.
      *
      * @var string
      */
     public $secureUrl;
 
     /**
-     * Mime-type of the audio or NULL.
+     * The MIME type of an audio resource associated with the object.
      *
      * @var type
      */

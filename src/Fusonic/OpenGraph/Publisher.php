@@ -12,6 +12,12 @@ class Publisher
     const DOCTYPE_HTML5 = 1;
     const DOCTYPE_XHTML = 2;
 
+    /**
+     * Defines the style in which HTML tags should be written. Use one of Publisher::DOCTYPE_HTML5 or
+     * Publisher::DOCTYPE_XHTML.
+     *
+     * @var int
+     */
     public $doctype = self::DOCTYPE_HTML5;
 
     public function __construct()
@@ -33,7 +39,13 @@ class Publisher
             } elseif ($property->value instanceof \DateTime) {
                 $value = $property->value->format("c");
             } elseif (is_object($property->value)) {
-                throw new \UnexpectedValueException(sprintf("Cannot handle value of type '%0' for property '%1'.", get_class($property->value), $property->key));
+                throw new \UnexpectedValueException(
+                    sprintf(
+                        "Cannot handle value of type '%0' for property '%1'.",
+                        get_class($property->value),
+                        $property->key
+                    )
+                );
             } elseif ($property->value === true) {
                 $value = "1";
             } elseif ($property->value === false) {
