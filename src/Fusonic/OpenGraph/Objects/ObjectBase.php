@@ -305,46 +305,6 @@ abstract class ObjectBase
     }
 
     /**
-     * Returns the largest of all images found or NULL.
-     *
-     * @return  Image
-     */
-    public function getLargestImage()
-    {
-        return Linq::from($this->images)
-            ->orderByDescending(
-                function (Image $image) {
-                    return $image->width * $image->height;
-                }
-            )
-            ->firstOrNull();
-    }
-
-    /**
-     * Returns the smallest image larger than $minWidth and $minHeight.
-     *
-     * @param   int     $minWidth       Minimum width of the image.
-     * @param   int     $minHeight      Minimum height of the image.
-     *
-     * @return  Image
-     */
-    public function getImage($minWidth, $minHeight)
-    {
-        return Linq::from($this->images)
-            ->where(
-                function (Image $image) use ($minWidth, $minHeight) {
-                    return $image->width >= $minWidth && $image->height >= $minHeight;
-                }
-            )
-            ->orderBy(
-                function (Image $image) {
-                    return $image->width * $image->height;
-                }
-            )
-            ->firstOrNull();
-    }
-
-    /**
      * Gets all properties set on this object.
      *
      * @return  array|Property[]
