@@ -1,0 +1,12 @@
+# Site settings
+title: fusonic/seed
+email: office@fusonic.net
+description: "A blank repository to use as stub for PHP libraries."
+baseurl: ""
+url: "http://fusonic.github.io/seed"
+github_username: fusonic
+github_repository: seed
+
+# Build settings
+markdown: kramdown
+permalink: pretty

@@ -1,0 +1,68 @@
+@import "bootstrap/variables";
+@import "bootswatch/variables";
+@import "variables";
+@import "bootstrap/bootstrap";
+@import "bootswatch/bootswatch";
+
+body
+{
+  padding: @navbar-height 0;
+}
+
+// GitHub actions in navbar on top
+.navbar-gh-actions
+{
+  height: @navbar-height;
+
+  > iframe
+  {
+    .navbar-vertical-align(20px);
+  }
+}
+
+// Footer
+.footer
+{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: @navbar-height;
+  background-color: @gray-dark;
+  color: @gray-light;
+
+  a
+  {
+    color: @gray-light;
+  }
+
+  > .container > p
+  {
+    .navbar-vertical-align(@font-size-base * @line-height-base);
+  }
+}
+
+// Heading dividers
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6
+{
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+// Background pattern for jumbotron
+.jumbotron
+{
+  background: url(@jumbotron-pattern);
+  box-shadow: 0px 0px 10px #888;
+  margin-bottom: 10px;
+
+  > .container > h1
+  {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
