@@ -324,4 +324,22 @@ LONG;
 
         $res = $consumer->loadHtml($content);
     }
+
+    public function testLoadHtmlSpecialCharacters()
+    {
+        $content = <<<LONG
+<html>
+<head>
+<meta property="og:title" content="Apples &amp; Bananas - just &quot;Fruits&quot;">
+</head>
+<body></body>
+</html>
+LONG;
+
+        $consumer = new Consumer();
+
+        $res = $consumer->loadHtml($content);
+
+        $this->assertEquals("Apples & Bananas - just \"Fruits\"", $res->title);
+    }
 }
