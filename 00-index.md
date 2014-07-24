@@ -22,7 +22,7 @@ See [ogp.me](http://ogp.me) for information on the Open Graph protocol.
 
 The most flexible installation method is using Composer: Simply create a composer.json file in the root of your project:
 
-``` json
+```json
 {
     "require": {
         "fusonic/opengraph": "@dev"
@@ -32,16 +32,16 @@ The most flexible installation method is using Composer: Simply create a compose
 
 Install composer and run install command:
 
-``` bash
+{% highlight bash %}
 curl -s http://getcomposer.org/installer | php
 php composer.phar install
-```
+{% endhighlight %}
 
 Once installed, include vendor/autoload.php in your script.
 
-``` php
+{% highlight php %}
 require "vendor/autoload.php";
-```
+{% endhighlight %}
 
 ## Usage
 
