@@ -6328,9 +6328,11 @@ h6,
   padding-bottom: 5px;
 }
 .jumbotron {
-  background: url("http://subtlepatterns.com/patterns/sativa.png");
   box-shadow: 0px 0px 10px #888;
   margin-bottom: 10px;
+}
+.jumbotron.jumbotron-bg {
+  background: url("http://subtlepatterns.com/patterns/sativa.png");
 }
 .jumbotron > .container > h1 {
   border-bottom: none;

@@ -56,9 +56,13 @@ h6, .h6
 // Background pattern for jumbotron
 .jumbotron
 {
-  background: url(@jumbotron-pattern);
   box-shadow: 0px 0px 10px #888;
   margin-bottom: 10px;
+
+  &.jumbotron-bg
+  {
+    background: url(@jumbotron-pattern);
+  }
 
   > .container > h1
   {
