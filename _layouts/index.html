@@ -1,0 +1,24 @@
+---
+layout: default
+---
+
+<div class="jumbotron jumbotron-bg">
+    <div class="container">
+        <h1>{{ site.github_username }}/{{ site.github_repository }} <small>{{ site.version }}</small></h1>
+        <p>{{ site.description }}</p>
+        <p>
+            <a class="btn btn-success btn-lg" href="https://github.com/{{ site.github_username }}/{{ site.github_repository }}/archive/master.zip">
+                <i class="fa fa-download"></i>
+                Download
+                <small>.zip</small>
+            </a>
+            <a class="btn btn-default" href="https://github.com/{{ site.github_username }}/{{ site.github_repository }}">
+                <i class="fa fa-github"></i>
+                Project on GitHub
+            </a>
+        </p>
+    </div>
+</div>
+<div class="container">
+    {{ content }}
+</div>

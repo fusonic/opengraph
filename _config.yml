@@ -1,0 +1,13 @@
+# Site settings
+description: "A simple PHP library to read Open Graph data from the web or publish your own resources."
+baseurl: "/opengraph"
+url: "http://fusonic.github.io/opengraph"
+github_username: fusonic
+github_repository: opengraph
+version: 1.0.0
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+kramdown:
+  input: GFM

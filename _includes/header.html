@@ -1,0 +1,47 @@
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand visible-xs" href="#">
+                {{ site.github_username }}/{{ site.github_repository }}
+            </a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown hidden-xs">
+                    <a id="drop-libraries" class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="#menu">
+                        {{ site.github_username }}/{{ site.github_repository }}
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop-libraries">
+                        {% include libnav.html %}
+                    </ul>
+                </li>
+                {% assign sorted_pages = site.pages | sort:"name" %}
+                {% for node in sorted_pages %}
+                    {% if node.title %}
+                        <li {% if page.url == node.url %}class="active"{% endif %}>
+                            <a href="{{ node.url | prepend: site.baseurl }}">{{ node.title }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <div class="navbar-right navbar-gh-actions hidden-xs">
+                <!-- github star -->
+                <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user={{ site.github_username }}&amp;repo={{ site.github_repository }}&amp;type=watch&amp;count=true"
+                        allowtransparency="true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+
+                <!-- github clone -->
+                <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user={{ site.github_username }}&amp;repo={{ site.github_repository }}&amp;type=fork&amp;count=true"
+                        allowtransparency="true" frameborder="0" scrolling="0" width="92px" height="20px"></iframe>
+            </div>
+        </div><!--/.navbar-collapse -->
+    </div>
+</div>
+
+<div id="wrap">
