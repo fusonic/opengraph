@@ -4,9 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {% if page.url == "/" %}
-        <title>{{ site.title }} - {{ site.description }}</title>
+        <title>{{ site.github_username }}/{{ site.github_repository }} - {{ site.description }}</title>
     {% else %}
-        <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+        <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.github_username }}/{{ site.github_repository }}</title>
     {% endif %}
 
     <link rel="stylesheet" href="{{ "/css/style.css" | prepend: site.baseurl }}">
