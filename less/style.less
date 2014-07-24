@@ -4,9 +4,18 @@
 @import "bootstrap/bootstrap";
 @import "bootswatch/bootswatch";
 
+html,
 body
 {
-  padding: @navbar-height 0;
+  height: 100%;
+}
+
+#wrap
+{
+  min-height: 100%;
+  height: auto;
+  padding: @navbar-height 0 @navbar-height;
+  margin-bottom: -@navbar-height;
 }
 
 // GitHub actions in navbar on top
@@ -21,10 +30,8 @@ body
 }
 
 // Footer
-.footer
+#footer
 {
-  position: absolute;
-  bottom: 0;
   width: 100%;
   height: @navbar-height;
   background-color: @gray-dark;

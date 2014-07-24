@@ -9,3 +9,5 @@ version: 1.0.0
 # Build settings
 markdown: kramdown
 permalink: pretty
+kramdown:
+  input: GFM
