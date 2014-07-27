@@ -1,6 +1,6 @@
 # Site settings
 description: "A blank repository to use as stub for PHP libraries."
-baseurl: "/seed"
+baseurl: "/seed/"
 url: "http://fusonic.github.io/seed"
 github_username: fusonic
 github_repository: seed
