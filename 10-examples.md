@@ -6,7 +6,7 @@ permalink: /examples/
 
 ### Retrieve Open Graph data from a URL
 
-```php
+{% highlight php linenos %}
 use Fusonic\OpenGraph\Consumer;
 
 $consumer = new Consumer();
@@ -30,7 +30,7 @@ echo "Video URL: " . $video->url                // http://www.youtube.com/v/P422
 echo "Video height: " . $video->height          // 1080
 echo "Video width: " . $video->width            // 1920
 echo "Video type: " . $video->type              // application/x-shockwave-flash
-```
+{% endhighlight %}
 
 _There are some more properties but these are the basic and most commonly used ones._
 

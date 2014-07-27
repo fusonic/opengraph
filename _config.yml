@@ -7,7 +7,7 @@ github_repository: opengraph
 version: 1.0.0
 
 # Build settings
-markdown: redcarpet2
+markdown: kramdown
 permalink: pretty
 kramdown:
   input: GFM
