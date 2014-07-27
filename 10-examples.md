@@ -6,9 +6,7 @@ permalink: /examples/
 
 ### Retrieve Open Graph data from a URL
 
-{% highlight php linenos %}
-<?php
-
+{% highlight php startinline %}
 use Fusonic\OpenGraph\Consumer;
 
 $consumer = new Consumer();
@@ -38,9 +36,7 @@ _There are some more properties but these are the basic and most commonly used o
 
 ### Publish own Open Graph data
 
-{% highlight php linenos %}
-<?php
-
+{% highlight php startinline %}
 use Fusonic\OpenGraph\Elements\Image;
 use Fusonic\OpenGraph\Elements\Video;
 use Fusonic\OpenGraph\Publisher;
@@ -68,15 +64,20 @@ $object->videos[] = $video;
 
 // Generate HTML code
 echo $publisher->generateHtml($object);
-// <meta property="og:description" content="Originally recorded at the Facebook World ...">
-// <meta property="og:image:url" content="https://i1.ytimg.com/vi/P422jZg50X4/maxresdefault.jpg">
-// <meta property="og:site_name" content="YouTube">
-// <meta property="og:type" content="website">
-// <meta property="og:url" content="http://www.youtube.com/watch?v=P422jZg50X4">
-// <meta property="og:video:url" content="http://www.youtube.com/v/P422jZg50X4?version=3&amp;autohide=1">
-// <meta property="og:video:height" content="1080">
-// <meta property="og:video:type" content="application/x-shockwave-flash">
-// <meta property="og:video:width" content="1920">
 {% endhighlight %}
 
-_HTML code is formatted just for displaying purposes. You may choose between HTML5/XHTML output using the ```$publisher->doctype``` property._
+This will result in this HTML output:
+
+{% highlight html %}
+<meta property="og:description" content="Originally recorded at the Facebook World ...">
+<meta property="og:image:url" content="https://i1.ytimg.com/vi/P422jZg50X4/maxresdefault.jpg">
+<meta property="og:site_name" content="YouTube">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://www.youtube.com/watch?v=P422jZg50X4">
+<meta property="og:video:url" content="http://www.youtube.com/v/P422jZg50X4?version=3&amp;autohide=1">
+<meta property="og:video:height" content="1080">
+<meta property="og:video:type" content="application/x-shockwave-flash">
+<meta property="og:video:width" content="1920">
+{% endhighlight %}
+
+_You may choose between HTML5/XHTML output using the ```$publisher->doctype``` property._
