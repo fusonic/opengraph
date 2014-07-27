@@ -38,7 +38,7 @@ _There are some more properties but these are the basic and most commonly used o
 
 ### Publish own Open Graph data
 
-```php
+{% highlight php linenos %}
 <?php
 
 use Fusonic\OpenGraph\Elements\Image;
@@ -77,6 +77,6 @@ echo $publisher->generateHtml($object);
 // <meta property="og:video:height" content="1080">
 // <meta property="og:video:type" content="application/x-shockwave-flash">
 // <meta property="og:video:width" content="1920">
-```
+{% endhighlight %}
 
 _HTML code is formatted just for displaying purposes. You may choose between HTML5/XHTML output using the ```$publisher->doctype``` property._
