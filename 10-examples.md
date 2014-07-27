@@ -7,6 +7,8 @@ permalink: /examples/
 ### Retrieve Open Graph data from a URL
 
 {% highlight php linenos %}
+<?php
+
 use Fusonic\OpenGraph\Consumer;
 
 $consumer = new Consumer();
@@ -37,6 +39,8 @@ _There are some more properties but these are the basic and most commonly used o
 ### Publish own Open Graph data
 
 ```php
+<?php
+
 use Fusonic\OpenGraph\Elements\Image;
 use Fusonic\OpenGraph\Elements\Video;
 use Fusonic\OpenGraph\Publisher;
