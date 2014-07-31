@@ -12,4 +12,6 @@ permalink: pretty
 kramdown:
   input: GFM
 extensions: [fenced_code_blocks]
-
+sass:
+  sass_dir: _sass
+  style: :compressed
