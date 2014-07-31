@@ -24,11 +24,11 @@
                 </li>
                 {% assign sorted_pages = site.pages | sort:"name" %}
                 {% for node in sorted_pages %}
-                {% if node.title %}
-                <li {% if page.url == node.url %}class="active"{% endif %}>
-                <a href="{{ node.url | prepend: site.baseurl }}">{{ node.title }}</a>
-                </li>
-                {% endif %}
+                    {% if node.title %}
+                        <li {% if page.url == node.url %}class="active"{% endif %}>
+                            <a href="{{ node.url | prepend: site.baseurl }}">{{ node.title }}</a>
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
             <div class="navbar-right navbar-gh-actions hidden-xs">
