@@ -15,3 +15,8 @@ echo "test";
 <?php
 echo "test";
 ```
+
+~~~php
+<?php
+echo "test";
+~~~
