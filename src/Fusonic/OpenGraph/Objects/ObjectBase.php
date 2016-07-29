@@ -202,7 +202,7 @@ abstract class ObjectBase
                     }
                     break;
                 case Property::UPDATED_TIME:
-                    if ($this->updatedTime === null) {
+                    if ($this->updatedTime === null && strtotime($value) !== false) {
                         $this->updatedTime = $this->convertToDateTime($value);
                     }
                     break;
