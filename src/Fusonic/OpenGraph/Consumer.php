@@ -33,15 +33,14 @@ class Consumer
     public $debug = false;
 
     /**
-     * @param   AdapterInterface    $adapter        Guzzle adapter to use for making HTTP requests.
+     * @param   AdapterInterface $adapter Guzzle adapter to use for making HTTP requests.
+     * @param   array            $config  Optional Guzzle config overrides.
      */
-    public function __construct(AdapterInterface $adapter = null)
+    public function __construct(AdapterInterface $adapter = null, array $config = [])
     {
-        $this->client = new Client(
-            [
-                "adapter" => $adapter,
-            ]
-        );
+        $config = array_replace_recursive(['adapter' => $adapter], $config);
+
+        $this->client = new Client($config);
     }
 
     /**
