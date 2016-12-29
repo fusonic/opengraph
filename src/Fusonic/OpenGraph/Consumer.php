@@ -87,19 +87,19 @@ class Consumer
         $properties = [];
         foreach(['name', 'property'] as $t)
         {
-          // Get all meta-tags starting with "og:"
-          $ogMetaTags = $crawler->filter("meta[{$t}^='og:']");
-          // Create clean property array
-          $props = Linq::from($ogMetaTags)
-              ->select(
-                  function (\DOMElement $tag) use ($t) {
-                      $name = strtolower(trim($tag->getAttribute($t)));
-                      $value = trim($tag->getAttribute("content"));
-                      return new Property($name, $value);
-                  }
-              )
-              ->toArray();
-          $properties = array_merge($properties, $props);
+            // Get all meta-tags starting with "og:"
+            $ogMetaTags = $crawler->filter("meta[{$t}^='og:']");
+            // Create clean property array
+            $props = Linq::from($ogMetaTags)
+                ->select(
+                    function (\DOMElement $tag) use ($t) {
+                        $name = strtolower(trim($tag->getAttribute($t)));
+                        $value = trim($tag->getAttribute("content"));
+                        return new Property($name, $value);
+                    }
+                )
+                ->toArray();
+            $properties = array_merge($properties, $props);
           
         }
             
