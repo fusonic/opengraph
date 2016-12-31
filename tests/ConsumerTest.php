@@ -1,6 +1,6 @@
 <?php
 
-namespace Fusonic\OpenGraph\Objects\Test;
+namespace Fusonic\OpenGraph\Test;
 
 use Fusonic\OpenGraph\Consumer;
 

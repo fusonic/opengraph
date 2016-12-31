@@ -12,8 +12,13 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "Fusonic\\OpenGraph": "src/"
+        "psr-4": {
+            "Fusonic\\OpenGraph\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Fusonic\\OpenGraph\\Test\\": "tests/"
         }
     },
     "require": {
