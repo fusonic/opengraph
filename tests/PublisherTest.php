@@ -2,8 +2,6 @@
 
 namespace Fusonic\OpenGraph\Test;
 
-require_once(__DIR__ . DIRECTORY_SEPARATOR . "TestData" . DIRECTORY_SEPARATOR . "TestPublishObject.php");
-
 use Fusonic\OpenGraph\Publisher;
 use Fusonic\OpenGraph\Test\TestData\TestPublishObject;
 
