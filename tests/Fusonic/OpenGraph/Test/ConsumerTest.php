@@ -342,4 +342,22 @@ LONG;
 
         $this->assertEquals("Apples & Bananas - just \"Fruits\"", $res->title);
     }
+    
+    public function testReadMetaName()
+    {
+        $content = <<<LONG
+<html>
+<head>
+<meta name="og:title" content="A 'name' attribute instead of 'property'">
+</head>
+<body></body>
+</html>
+LONG;
+
+        $consumer = new Consumer();
+
+        $res = $consumer->loadHtml($content);
+
+        $this->assertEquals("A 'name' attribute instead of 'property'", $res->title);
+    }
 }
