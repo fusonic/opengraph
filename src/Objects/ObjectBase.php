@@ -316,6 +316,10 @@ abstract class ObjectBase
         foreach ($this->audios as $audio) {
             $properties = array_merge($properties, $audio->getProperties());
         }
+        
+        if ($this->title !== null) {
+            $properties[] = new Property(Property::TITLE, $this->title);
+        }
 
         if ($this->description !== null) {
             $properties[] = new Property(Property::DESCRIPTION, $this->description);
