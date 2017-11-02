@@ -123,16 +123,44 @@ class Consumer
         // Fallback for title
         if ($this->useFallbackMode && !$object->title) {
             $titleElement = $crawler->filter("title")->first();
-            if ($titleElement) {
+            if ($titleElement->count()) {
                 $object->title = trim($titleElement->text());
+            }
+
+            if (!$object->title) {
+                $titleElement = $crawler->filter("h1")->first();
+                if ($titleElement->count()) {
+                    $object->title = trim($titleElement->text());
+                }
+            }
+
+            if (!$object->title) {
+                $titleElement = $crawler->filter("h2")->first();
+                if ($titleElement->count()) {
+                    $object->title = trim($titleElement->text());
+                }
             }
         }
 
         // Fallback for description
         if ($this->useFallbackMode && !$object->description) {
             $descriptionElement = $crawler->filter("meta[property='description']")->first();
-            if ($descriptionElement) {
+            if ($descriptionElement->count()) {
                 $object->description = trim($descriptionElement->attr("content"));
+            }
+
+            if (!$object->description) {
+                $descriptionElement = $crawler->filter("meta[name='description']")->first();
+                if ($descriptionElement->count()) {
+                    $object->description = trim($descriptionElement->attr("content"));
+                }
+            }
+
+            if (!$object->description) {
+                $descriptionElement = $crawler->filter("p")->first();
+                if ($descriptionElement->count()) {
+                    $object->description = trim($descriptionElement->text());
+                }
             }
         }
 
