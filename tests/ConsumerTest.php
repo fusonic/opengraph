@@ -99,6 +99,32 @@ LONG;
     }
 
     /**
+     * Checks crawler to correctly use fallback elements when activated.
+     */
+    public function testLoadHtmlCanonicalLinkFallbacksOn()
+    {
+        $content = <<<LONG
+<html>
+<head>
+<title>Title</title>
+<meta property="description" content="Description">
+<link rel="canonical" href="https://github.com/fusonic/opengraph">
+</head>
+<body></body>
+</html>
+LONG;
+
+        $consumer = new Consumer();
+        $consumer->useFallbackMode = true;
+
+        $res = $consumer->loadHtml($content, "about:blank");
+
+        $this->assertEquals("Description", $res->description);
+        $this->assertEquals("Title", $res->title);
+        $this->assertEquals("https://github.com/fusonic/opengraph", $res->url);
+    }
+
+    /**
      * Checks crawler to handle arrays of elements with child-properties like described in the
      * Open Graph documentation (http://ogp.me/#array).
      */
