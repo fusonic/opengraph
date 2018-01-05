@@ -120,6 +120,14 @@ class Consumer
         // Assign all properties to the object
         $object->assignProperties($properties, $this->debug);
 
+        // Fallback for url
+        if ($this->useFallbackMode && !$object->url) {
+            $urlElement = $crawler->filter("link[rel='canonical']")->first();
+            if ($urlElement->count()) {
+                $object->url = trim($urlElement->attr("href"));
+            }
+        }
+
         // Fallback for title
         if ($this->useFallbackMode && !$object->title) {
             $titleElement = $crawler->filter("title")->first();
