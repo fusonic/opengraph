@@ -1,6 +1,6 @@
 <?php
 
-namespace Fusonic\OpenGraph;
+namespace Mpyw\OpenGraph;
 
 /**
  * Class holding data for a single Open Graph property on a web page.

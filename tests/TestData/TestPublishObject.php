@@ -1,9 +1,9 @@
 <?php
 
-namespace Fusonic\OpenGraph\Test\TestData;
+namespace Mpyw\OpenGraph\Test\TestData;
 
-use Fusonic\OpenGraph\Objects\ObjectBase;
-use Fusonic\OpenGraph\Property;
+use Mpyw\OpenGraph\Objects\ObjectBase;
+use Mpyw\OpenGraph\Property;
 
 class TestPublishObject extends ObjectBase
 {

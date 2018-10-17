@@ -1,8 +1,8 @@
 <?php
 
-namespace Fusonic\OpenGraph\Test;
+namespace Mpyw\OpenGraph\Test;
 
-use Fusonic\OpenGraph\Consumer;
+use Mpyw\OpenGraph\Consumer;
 
 class ConsumerTest extends \PHPUnit_Framework_TestCase
 {

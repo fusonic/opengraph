@@ -1,9 +1,9 @@
 <?php
 
-namespace Fusonic\OpenGraph\Test;
+namespace Mpyw\OpenGraph\Test;
 
-use Fusonic\OpenGraph\Publisher;
-use Fusonic\OpenGraph\Test\TestData\TestPublishObject;
+use Mpyw\OpenGraph\Publisher;
+use Mpyw\OpenGraph\Test\TestData\TestPublishObject;
 
 class PublisherTest extends \PHPUnit_Framework_TestCase
 {

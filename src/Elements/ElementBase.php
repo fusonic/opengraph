@@ -1,6 +1,6 @@
 <?php
 
-namespace Fusonic\OpenGraph\Elements;
+namespace Mpyw\OpenGraph\Elements;
 
 /**
  * Abstract base class for all OpenGraph elements (e.g. images, videos etc.)

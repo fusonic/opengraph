@@ -1,8 +1,8 @@
 <?php
 
-namespace Fusonic\OpenGraph\Elements;
+namespace Mpyw\OpenGraph\Elements;
 
-use Fusonic\OpenGraph\Property;
+use Mpyw\OpenGraph\Property;
 
 /**
  * An Open Graph image element.

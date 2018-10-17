@@ -1,10 +1,10 @@
 <?php
 
-namespace Fusonic\OpenGraph;
+namespace Mpyw\OpenGraph;
 
 use Fusonic\Linq\Linq;
-use Fusonic\OpenGraph\Objects\ObjectBase;
-use Fusonic\OpenGraph\Objects\Website;
+use Mpyw\OpenGraph\Objects\ObjectBase;
+use Mpyw\OpenGraph\Objects\Website;
 use GuzzleHttp\Adapter\AdapterInterface;
 use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler;
@@ -86,8 +86,7 @@ class Consumer
         $crawler->addHTMLContent($content, 'UTF-8');
 
         $properties = [];
-        foreach(['name', 'property'] as $t)
-        {
+        foreach (['name', 'property'] as $t) {
             // Get all meta-tags starting with "og:"
             $ogMetaTags = $crawler->filter("meta[{$t}^='og:']");
             // Create clean property array
@@ -101,7 +100,6 @@ class Consumer
                 )
                 ->toArray();
             $properties = array_merge($properties, $props);
-          
         }
             
         // Create new object of the correct type

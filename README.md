@@ -1,8 +1,7 @@
-# fusonic/opengraph
+# mpyw/opengraph
 
-[![Build Status](https://travis-ci.org/fusonic/opengraph.png)](https://travis-ci.org/fusonic/opengraph)
-[![](https://scrutinizer-ci.com/g/fusonic/opengraph/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/fusonic/opengraph/?branch=master)
-[![Total Downloads](https://poser.pugx.org/fusonic/opengraph/downloads.png)](https://packagist.org/packages/fusonic/opengraph)
+[![Build Status](https://travis-ci.org/mpyw/opengraph.png)](https://travis-ci.org/mpyw/opengraph)
+[![](https://scrutinizer-ci.com/g/mpyw/opengraph/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mpyw/opengraph/?branch=master)
 
 A simple library to read Open Graph data from the web and generate HTML code to publish your own Open Graph objects. A fallback mode enables you to read data from websites that do not implement the Open Graph protocol.
 
@@ -24,7 +23,7 @@ The most flexible installation method is using Composer: Simply create a compose
 ``` json
 {
     "require": {
-        "fusonic/opengraph": "@dev"
+        "mpyw/opengraph": "@dev"
     }
 }
 ```
@@ -46,7 +45,7 @@ require "vendor/autoload.php";
 ### Retrieve Open Graph data from a URL
 
 ``` php
-use Fusonic\OpenGraph\Consumer;
+use Mpyw\OpenGraph\Consumer;
 
 $consumer = new Consumer();
 $object = $consumer->loadUrl("http://www.youtube.com/watch?v=P422jZg50X4");
@@ -76,10 +75,10 @@ _There are some more properties but these are the basic and most commonly used o
 ### Publish own Open Graph data
 
 ``` php
-use Fusonic\OpenGraph\Elements\Image;
-use Fusonic\OpenGraph\Elements\Video;
-use Fusonic\OpenGraph\Publisher;
-use Fusonic\OpenGraph\Objects\Website;
+use Mpyw\OpenGraph\Elements\Image;
+use Mpyw\OpenGraph\Elements\Video;
+use Mpyw\OpenGraph\Publisher;
+use Mpyw\OpenGraph\Objects\Website;
 
 $publisher = new Publisher();
 $object = new Website();
