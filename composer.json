@@ -1,24 +1,28 @@
 {
-    "name": "fusonic/opengraph",
+    "name": "mpyw/opengraph",
     "description": "PHP library for consuming and publishing Open Graph resources.",
-    "keywords": ["opengraph"],
+    "keywords": ["opengraph", "ogp"],
     "type": "library",
-    "homepage": "https://github.com/fusonic/fusonic-opengraph",
+    "homepage": "https://github.com/mpyw/opengraph",
     "license": "MIT",
     "authors": [
         {
             "name": "Fusonic",
             "homepage": "http://www.fusonic.net"
+        },
+        {
+            "name": "mpyw",
+            "homepage": "https://github.com/mpyw"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Fusonic\\OpenGraph\\": "src/"
+            "Mpyw\\OpenGraph\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Fusonic\\OpenGraph\\Test\\": "tests/"
+            "Mpyw\\OpenGraph\\Test\\": "tests/"
         }
     },
     "require": {

@@ -7,9 +7,9 @@ if (!$loader = @include __DIR__.'/../vendor/autoload.php') {
 }
 
 // Create a new crawler
-$crawler = new Fusonic\OpenGraph\Consumer();
+$crawler = new Mpyw\OpenGraph\Consumer();
 
-// Crawl the desired URL and retrieve a Fusonic\OpenGraph\Object in response
+// Crawl the desired URL and retrieve a Mpyw\OpenGraph\Object in response
 $object = $crawler->loadUrl("https://github.com");
 
 var_dump($object);

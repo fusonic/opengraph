@@ -1,6 +1,6 @@
 <?php
 
-namespace Fusonic\OpenGraph\Objects;
+namespace Mpyw\OpenGraph\Objects;
 
 /**
  * This object type represents a website. It is a simple object type and uses only common Open Graph properties. For

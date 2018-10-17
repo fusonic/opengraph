@@ -1,12 +1,12 @@
 <?php
 
-namespace Fusonic\OpenGraph\Objects;
+namespace Mpyw\OpenGraph\Objects;
 
 use Fusonic\Linq\Linq;
-use Fusonic\OpenGraph\Elements\Audio;
-use Fusonic\OpenGraph\Elements\Image;
-use Fusonic\OpenGraph\Elements\Video;
-use Fusonic\OpenGraph\Property;
+use Mpyw\OpenGraph\Elements\Audio;
+use Mpyw\OpenGraph\Elements\Image;
+use Mpyw\OpenGraph\Elements\Video;
+use Mpyw\OpenGraph\Property;
 
 /**
  * Abstract base class for all Open Graph objects (website, video, ...)
@@ -129,7 +129,7 @@ abstract class ObjectBase
             $name = $property->key;
             $value = $property->value;
 
-            switch($name) {
+            switch ($name) {
                 case Property::AUDIO:
                 case Property::AUDIO_URL:
                     $this->audios[] = new Audio($value);
@@ -235,8 +235,7 @@ abstract class ObjectBase
 
     private function handleImageAttribute(Image $element, $name, $value)
     {
-        switch($name)
-        {
+        switch ($name) {
             case Property::IMAGE_HEIGHT:
                 $element->height = (int)$value;
                 break;
@@ -257,8 +256,7 @@ abstract class ObjectBase
 
     private function handleVideoAttribute(Video $element, $name, $value)
     {
-        switch($name)
-        {
+        switch ($name) {
             case Property::VIDEO_HEIGHT:
                 $element->height = (int)$value;
                 break;
@@ -276,8 +274,7 @@ abstract class ObjectBase
 
     private function handleAudioAttribute(Audio $element, $name, $value)
     {
-        switch($name)
-        {
+        switch ($name) {
             case Property::AUDIO_TYPE:
                 $element->type = $value;
                 break;
@@ -294,8 +291,7 @@ abstract class ObjectBase
 
     protected function convertToBoolean($value)
     {
-        switch(strtolower($value))
-        {
+        switch (strtolower($value)) {
             case "1":
             case "true":
                 return true;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fusonic\OpenGraph;
+namespace Mpyw\OpenGraph;
 
-use Fusonic\OpenGraph\Objects\ObjectBase;
+use Mpyw\OpenGraph\Objects\ObjectBase;
 
 /**
  * Class for generating Open Graph tags from objects.
