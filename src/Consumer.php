@@ -2,7 +2,6 @@
 
 namespace Mpyw\OpenGraph;
 
-use Fusonic\Linq\Linq;
 use Mpyw\OpenGraph\Objects\ObjectBase;
 use Mpyw\OpenGraph\Objects\Website;
 use GuzzleHttp\Adapter\AdapterInterface;
@@ -88,27 +87,22 @@ class Consumer
         $properties = [];
         foreach (['name', 'property'] as $t) {
             // Get all meta-tags starting with "og:"
-            $ogMetaTags = $crawler->filter("meta[{$t}^='og:']");
-            // Create clean property array
-            $props = Linq::from($ogMetaTags)
-                ->select(
-                    function (\DOMElement $tag) use ($t) {
-                        $name = strtolower(trim($tag->getAttribute($t)));
-                        $value = trim($tag->getAttribute("content"));
-                        return new Property($name, $value);
-                    }
-                )
-                ->toArray();
+            $props = array_map(
+                function (\DOMElement $tag) use ($t) {
+                    $name = strtolower(trim($tag->getAttribute($t)));
+                    $value = trim($tag->getAttribute("content"));
+                    return new Property($name, $value);
+                },
+                iterator_to_array($crawler->filter("meta[{$t}^='og:']"), false)
+            );
             $properties = array_merge($properties, $props);
         }
             
         // Create new object of the correct type
-        $typeProperty = Linq::from($properties)
-            ->firstOrNull(
-                function (Property $property) {
-                    return $property->key === Property::TYPE;
-                }
-            );
+        $typeProperty = current(array_filter($properties, function (Property $property) {
+            return $property->key === Property::TYPE;
+        })) ?: null;
+
         switch ($typeProperty !== null ? $typeProperty->value : null) {
             default:
                 $object = new Website();
