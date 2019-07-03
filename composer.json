@@ -26,13 +26,13 @@
         }
     },
     "require": {
-        "php": "^5.4|^7.0",
-        "symfony/dom-crawler": "^2.5",
-        "symfony/css-selector": "^2.5",
-        "guzzlehttp/guzzle": "^4.0"
+        "php": "^7.2",
+        "symfony/dom-crawler": "^4.1",
+        "symfony/css-selector": "^4.1",
+        "ext-dom": "*"
     },
     "require-dev": {
-        "fusonic/linq": "~1.0",
-        "phpunit/phpunit": "^4.8|^5.7"
+        "phpunit/phpunit": "^8.0",
+        "friendsofphp/php-cs-fixer": "^2.15"
     }
 }

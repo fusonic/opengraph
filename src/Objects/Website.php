@@ -10,12 +10,13 @@ namespace Mpyw\OpenGraph\Objects;
  */
 class Website extends ObjectBase
 {
-    const TYPE = "website";
+    public const TYPE = 'website';
 
+    /**
+     * Website constructor.
+     */
     public function __construct()
     {
-        parent::__construct();
-
-        $this->type = self::TYPE;
+        $this->type = static::TYPE;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Mpyw\OpenGraph;
 
+use DateTimeInterface;
+use Mpyw\OpenGraph\Exceptions\UnexpectedValueException;
 use Mpyw\OpenGraph\Objects\ObjectBase;
 
 /**
@@ -9,8 +11,8 @@ use Mpyw\OpenGraph\Objects\ObjectBase;
  */
 class Publisher
 {
-    const DOCTYPE_HTML5 = 1;
-    const DOCTYPE_XHTML = 2;
+    public const DOCTYPE_HTML5 = 1;
+    public const DOCTYPE_XHTML = 2;
 
     /**
      * Defines the style in which HTML tags should be written. Use one of Publisher::DOCTYPE_HTML5 or
@@ -20,26 +22,23 @@ class Publisher
      */
     public $doctype = self::DOCTYPE_HTML5;
 
-    public function __construct()
-    {
-    }
-
     public function generateHtml(ObjectBase $object)
     {
-        $html = "";
-        $format = "<meta property=\"%s\" content=\"%s\"" . ($this->doctype == self::DOCTYPE_XHTML ? " />" : ">");
+        $html = '';
+        $format = '<meta property="%s" content="%s"' . ($this->doctype == self::DOCTYPE_XHTML ? ' />' : '>');
 
         foreach ($object->getProperties() as $property) {
-            if ($html !== "") {
+            if ($html !== '') {
                 $html .= "\n";
             }
 
             if ($property->value === null) {
                 continue;
-            } elseif ($property->value instanceof \DateTime) {
-                $value = $property->value->format("c");
+            }
+            if ($property->value instanceof DateTimeInterface) {
+                $value = $property->value->format('c');
             } elseif (is_object($property->value)) {
-                throw new \UnexpectedValueException(
+                throw new UnexpectedValueException(
                     sprintf(
                         "Cannot handle value of type '%0' for property '%1'.",
                         get_class($property->value),
@@ -47,9 +46,9 @@ class Publisher
                     )
                 );
             } elseif ($property->value === true) {
-                $value = "1";
+                $value = '1';
             } elseif ($property->value === false) {
-                $value = "0";
+                $value = '0';
             } else {
                 $value = (string)$property->value;
             }

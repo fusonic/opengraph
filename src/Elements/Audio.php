@@ -19,33 +19,47 @@ class Audio extends ElementBase
     /**
      * An alternate URL to use if an audio resource requires HTTPS.
      *
-     * @var string
+     * @var null|string
      */
     public $secureUrl;
 
     /**
      * The MIME type of an audio resource associated with the object.
      *
-     * @var type
+     * @var null|string
      */
     public $type;
 
     /**
-     * @param   string      $url            URL to the audio file.
+     * @param mixed $url URL to the audio file.
      */
     public function __construct($url)
     {
-        parent::__construct();
+        $this->url = (string)$url;
+    }
 
-        $this->url = $url;
+    /**
+     * @param string $name
+     * @param mixed  $value
+     */
+    public function setAttribute(string $name, $value)
+    {
+        switch ($name) {
+            case Property::AUDIO_TYPE:
+                $this->type = (string)$value;
+                break;
+            case Property::AUDIO_SECURE_URL:
+                $this->secureUrl = (string)$value;
+                break;
+        }
     }
 
     /**
      * Gets all properties set on this element.
      *
-     * @return  array|Property[]
+     * @return Property[]
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         $properties = [];
 
