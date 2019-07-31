@@ -12,6 +12,8 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 class Consumer
 {
+    use GenericHelper;
+
     /**
      * When enabled, crawler will read content of title and meta description if no
      * Open Graph data is provided by target page.
@@ -118,10 +120,9 @@ class Consumer
     protected function fallbackForUrl(ObjectBase $object, Crawler $crawler, ?string $fallbackUrl = null)
     {
         $object->url = $object->url
-            ?: $crawler->evaluate('normalize-space(//link[@rel="canonical"]/@href)')[0]
-                ?? null
-            ?: $fallbackUrl
-            ?: $object->url;
+            ?? $this->emptyStringAsNull($crawler->evaluate('normalize-space(//link[@rel="canonical"]/@href)')[0])
+            ?? $this->emptyStringAsNull($fallbackUrl)
+            ?? $object->url;
 
         return $this;
     }
@@ -134,11 +135,10 @@ class Consumer
     protected function fallbackForTitle(ObjectBase $object, Crawler $crawler)
     {
         $object->title = $object->title
-            ?: $crawler->evaluate('normalize-space(//title)')[0]
-                ?? $crawler->evaluate('normalize-space(//h1)')[0]
-                ?? $crawler->evaluate('normalize-space(//h2)')[0]
-                ?? null
-            ?: $object->title;
+            ?? $this->emptyStringAsNull($crawler->evaluate('normalize-space(//title)')[0])
+            ?? $this->emptyStringAsNull($crawler->evaluate('normalize-space(//h1)')[0])
+            ?? $this->emptyStringAsNull($crawler->evaluate('normalize-space(//h2)')[0])
+            ?? $object->title;
 
         return $this;
     }
@@ -151,10 +151,9 @@ class Consumer
     protected function fallbackForDescription(ObjectBase $object, Crawler $crawler)
     {
         $object->description = $object->description
-            ?: $crawler->evaluate('normalize-space(//meta[@property="description" or @name="description"]/@content)')[0]
-                ?? $crawler->evaluate('normalize-space(//p)')[0]
-                ?? null
-            ?: $object->description;
+            ?? $this->emptyStringAsNull($crawler->evaluate('normalize-space(//meta[@property="description" or @name="description"]/@content)')[0])
+            ?? $this->emptyStringAsNull($crawler->evaluate('normalize-space(//p)')[0])
+            ?? $object->description;
 
         return $this;
     }

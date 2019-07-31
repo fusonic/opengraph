@@ -32,4 +32,13 @@ trait GenericHelper
     {
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
+
+    /**
+     * @param  null|string $string
+     * @return null|string
+     */
+    protected function emptyStringAsNull(?string $string): ?string
+    {
+        return (string)$string !== '' ? (string)$string : null;
+    }
 }
