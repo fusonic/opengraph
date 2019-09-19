@@ -385,4 +385,13 @@ LONG;
 
         $this->assertEquals("A 'name' attribute instead of 'property'", $res->title);
     }
+
+    public function testLoadHtmlEmpty(): void
+    {
+        $content = '   ';
+
+        (new Consumer())->loadHtml($content);
+
+        $this->assertTrue(true);
+    }
 }

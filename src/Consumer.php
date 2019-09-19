@@ -37,7 +37,9 @@ class Consumer
      */
     public function loadHtml(string $html, ?string $fallbackUrl = null)
     {
-        $crawler = $this->newCrawler($html);
+        // Note: Avoid Crawler::evaluate() throwing LogicException against empty HTML
+        $crawler = $this->newCrawler($this->emptyStringAsNull(trim($html)) ?? '<!DOCTYPE html><html></html>');
+
         $properties = $this->newProperties($crawler);
 
         $object = $this
