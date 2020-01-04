@@ -62,6 +62,20 @@ abstract class ObjectBase
     public $localeAlternate = [];
 
     /**
+     * The price amount specified.
+     *
+     * @var null|string
+     */
+    public $priceAmount;
+
+    /**
+     * The currency code specified.
+     *
+     * @var null|string
+     */
+    public $priceCurrency;
+    
+    /**
      * @var null|bool
      */
     public $richAttachment;
@@ -185,6 +199,16 @@ abstract class ObjectBase
                 case Property::LOCALE_ALTERNATE:
                     $this->localeAlternate[] = (string)$value;
                     break;
+                case Property::PRICE_AMOUNT:
+                    if ($this->priceAmount === null) {
+                        $this->priceAmount = (string)$value;
+                    }
+                    break;
+                case Property::PRICE_CURRENCY:
+                    if ($this->priceCurrency === null) {
+                        $this->priceCurrency = (string)$value;
+                    }
+                    break;
                 case Property::RICH_ATTACHMENT:
                     $this->richAttachment = $this->convertToBoolean($value);
                     break;
@@ -271,6 +295,14 @@ abstract class ObjectBase
 
         foreach ($this->localeAlternate as $locale) {
             $properties[] = new Property(Property::LOCALE_ALTERNATE, $locale);
+        }
+        
+        if ($this->priceAmount !== null) {
+            $properties[] = new Property(Property::PRICE_AMOUNT, $this->priceAmount);
+        }
+
+        if ($this->priceCurrency !== null) {
+            $properties[] = new Property(Property::PRICE_CURRENCY, $this->priceCurrency);
         }
 
         if ($this->richAttachment !== null) {
