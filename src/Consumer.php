@@ -82,7 +82,8 @@ class Consumer
 
     private function extractOpenGraphData($content)
     {
-        $crawler = new Crawler($content);
+        $crawler = new Crawler;
+        $crawler->addHTMLContent($content, 'UTF-8');
 
         $properties = [];
         foreach(['name', 'property'] as $t)
