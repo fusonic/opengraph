@@ -1,7 +1,7 @@
 # fusonic/opengraph
 
 [![Build Status](https://travis-ci.org/fusonic/opengraph.png)](https://travis-ci.org/fusonic/opengraph)
-[![](https://scrutinizer-ci.com/g/fusonic/opengraph/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/fusonic/opengraph/?branch=master)
+[![](https://scrutinizer-ci.com/g/fusonic/opengraph/badges/coverage.png?b=2.x)](https://scrutinizer-ci.com/g/fusonic/opengraph/?branch=2.x)
 [![Total Downloads](https://poser.pugx.org/fusonic/opengraph/downloads.png)](https://packagist.org/packages/fusonic/opengraph)
 
 A simple library to read Open Graph data from the web and generate HTML code to publish your own Open Graph objects. A fallback mode enables you to read data from websites that do not implement the Open Graph protocol.
@@ -12,11 +12,11 @@ See [ogp.me](http://ogp.me) for information on the Open Graph protocol.
 
 ## Requirements
 
-* PHP 5.4 and up
+* PHP 7.4+
 * [fusonic/linq](https://github.com/fusonic/linq)
-* [guzzlehttp/guzzle](https://github.com/guzzle/guzzle)
 * [symfony/css-selector](https://github.com/symfony/CssSelector)
 * [symfony/dom-crawler](https://github.com/symfony/DomCrawler)
+* [psr/http-client](https://github.com/php-fig/http-client), [psr/http-factory](https://github.com/php-fig/http-factory) and compatible implementation such as [guzzle/guzzle](https://github.com/guzzle/guzzle)
 
 ## Installation
 
@@ -24,7 +24,7 @@ The most flexible installation method is using Composer: Simply create a compose
 ``` json
 {
     "require": {
-        "fusonic/opengraph": "@dev"
+        "fusonic/opengraph": "^2.0"
     }
 }
 ```
@@ -48,7 +48,7 @@ require "vendor/autoload.php";
 ``` php
 use Fusonic\OpenGraph\Consumer;
 
-$consumer = new Consumer();
+$consumer = new Consumer($httpClient, $httpRequestFactory);
 $object = $consumer->loadUrl("http://www.youtube.com/watch?v=P422jZg50X4");
 
 // Basic information of the object
@@ -127,11 +127,7 @@ _HTML code is formatted just for displaying purposes. You may choose between HTM
 
 ## Running tests
 
-You can run the test suite with the following command:
-
-``` bash
-phpunit --bootstrap tests/bootstrap.php .
-``` 
+You can run the test suite by running `phpunit` from the command line.
 
 ## License
 

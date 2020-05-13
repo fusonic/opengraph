@@ -6,11 +6,7 @@ use Fusonic\OpenGraph\Elements\Video;
 use Fusonic\OpenGraph\Objects\Website;
 use Fusonic\OpenGraph\Publisher;
 
-if (!$loader = @include __DIR__.'/../vendor/autoload.php') {
-    die('You must set up the project dependencies, run the following commands:'.PHP_EOL.
-        'curl -s http://getcomposer.org/installer | php'.PHP_EOL.
-        'php composer.phar install'.PHP_EOL);
-}
+require __DIR__ . "/../vendor/autoload.php";
 
 // Construct a new Open Graph object
 $website = new Website();
@@ -43,5 +39,5 @@ $website->audios[] = $audio;
 
 // Create Publisher object and echo HTML code
 $publisher = new Publisher();
-$publisher->doctype = Publisher::DOCTYPE_XHTML;
+$publisher->doctype = Publisher::DOCTYPE_HTML5;
 echo $publisher->generateHtml($website);

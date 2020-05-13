@@ -38,19 +38,15 @@ class Property
 
     /**
      * Key of the property without "og:" prefix.
-     *
-     * @var string
      */
-    public $key;
+    public string $key;
 
     /**
      * Value of the property.
-     *
-     * @var string
      */
     public $value;
 
-    public function __construct($key, $value)
+    public function __construct(string $key, $value)
     {
         $this->key = $key;
         $this->value = $value;

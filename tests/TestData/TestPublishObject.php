@@ -18,7 +18,7 @@ class TestPublishObject extends ObjectBase
         $this->value = $value;
     }
 
-    public function getProperties()
+    public function getProperties(): array
     {
         return [
             new Property(self::KEY, $this->value),

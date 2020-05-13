@@ -2,17 +2,21 @@
 
 namespace Fusonic\OpenGraph\Test;
 
+use DateTime;
 use Fusonic\OpenGraph\Publisher;
 use Fusonic\OpenGraph\Test\TestData\TestPublishObject;
+use PHPUnit\Framework\TestCase;
+use stdClass;
+use UnexpectedValueException;
 
-class PublisherTest extends \PHPUnit_Framework_TestCase
+class PublisherTest extends TestCase
 {
     /**
      * @var Publisher
      */
     private $publisher;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->publisher = new Publisher();
 
@@ -28,24 +32,24 @@ class PublisherTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("", $result);
     }
 
-    public function testGenerateHtmlValuesProvider()
+    public function generateHtmlValuesProvider()
     {
         return [
-            [ true,                                         "1" ],
-            [ false,                                        "0" ],
-            [ 1,                                            "1" ],
-            [ -1,                                           "-1" ],
-            [ 1.11111,                                      "1.11111" ],
-            [ -1.11111,                                     "-1.11111" ],
-            [ new \DateTime("2014-07-21T20:14:00+02:00"),   "2014-07-21T20:14:00+02:00" ],
-            [ "string",                                     "string" ],
-            [ "some \" quotes",                             "some &quot; quotes" ],
-            [ "some & ampersand",                           "some &amp; ampersand" ],
+            "Boolean true" =>           [ true,                                         "1" ],
+            "Boolean false" =>          [ false,                                        "0" ],
+            "Integer 1" =>              [ 1,                                            "1" ],
+            "Integer -1" =>             [ -1,                                           "-1" ],
+            "Float 1.11111" =>          [ 1.11111,                                      "1.11111" ],
+            "Float -1.11111" =>         [ -1.11111,                                     "-1.11111" ],
+            "DateTime" =>               [ new DateTime("2014-07-21T20:14:00+02:00"),   "2014-07-21T20:14:00+02:00" ],
+            "String" =>                 [ "string",                                     "string" ],
+            "String with quotes" =>     [ "some \" quotes",                             "some &quot; quotes" ],
+            "String with ampersands" => [ "some & ampersand",                           "some &amp; ampersand" ],
         ];
     }
 
     /**
-     * @dataProvider testGenerateHtmlValuesProvider
+     * @dataProvider generateHtmlValuesProvider
      */
     public function testGenerateHtmlValues($value, $expectedContent)
     {
@@ -56,12 +60,11 @@ class PublisherTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('<meta property="' . TestPublishObject::KEY . '" content="' . $expectedContent . '">', $result);
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     */
     public function testGenerateHtmlUnsupportedObject()
     {
-        $object = new TestPublishObject(new \stdClass());
+        $this->expectException(UnexpectedValueException::class);
+
+        $object = new TestPublishObject(new stdClass());
 
         $this->publisher->generateHtml($object);
     }

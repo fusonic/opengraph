@@ -3,8 +3,9 @@
 namespace Fusonic\OpenGraph\Test;
 
 use Fusonic\OpenGraph\Consumer;
+use PHPUnit\Framework\TestCase;
 
-class ConsumerTest extends \PHPUnit_Framework_TestCase
+class ConsumerTest extends TestCase
 {
     /**
      * Checks crawler to read basic properties.
@@ -45,7 +46,7 @@ LONG;
         $this->assertContains("https://github.com/fusonic/fusonic-spreadsheetexport", $res->seeAlso);
         $this->assertEquals("Site name", $res->siteName);
         $this->assertEquals("Title", $res->title);
-        $this->assertTrue($res->updatedTime instanceof \DateTime);
+        $this->assertTrue($res->updatedTime instanceof \DateTimeInterface);
         $this->assertEquals("https://github.com/fusonic/fusonic-opengraph", $res->url);
     }
 
@@ -255,11 +256,10 @@ LONG;
         $this->assertEquals(0, count($res->images));
     }
 
-    /**
-     * @expectedException UnexpectedValueException
-     */
     public function testCrawlHtmlImageExceptionDebugOn()
     {
+        $this->expectException(\UnexpectedValueException::class);
+
         $content = <<<LONG
 <html>
 <head>
@@ -293,11 +293,10 @@ LONG;
         $this->assertEquals(0, count($res->videos));
     }
 
-    /**
-     * @expectedException UnexpectedValueException
-     */
     public function testCrawlHtmlVideoExceptionDebugOn()
     {
+        $this->expectException(\UnexpectedValueException::class);
+
         $content = <<<LONG
 <html>
 <head>
@@ -331,11 +330,10 @@ LONG;
         $this->assertEquals(0, count($res->audios));
     }
 
-    /**
-     * @expectedException UnexpectedValueException
-     */
     public function testCrawlHtmlAudioExceptionDebugOn()
     {
+        $this->expectException(\UnexpectedValueException::class);
+
         $content = <<<LONG
 <html>
 <head>

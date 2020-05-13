@@ -2,7 +2,9 @@
 
 namespace Fusonic\OpenGraph;
 
+use DateTimeInterface;
 use Fusonic\OpenGraph\Objects\ObjectBase;
+use UnexpectedValueException;
 
 /**
  * Class for generating Open Graph tags from objects.
@@ -15,16 +17,17 @@ class Publisher
     /**
      * Defines the style in which HTML tags should be written. Use one of Publisher::DOCTYPE_HTML5 or
      * Publisher::DOCTYPE_XHTML.
-     *
-     * @var int
      */
-    public $doctype = self::DOCTYPE_HTML5;
+    public int $doctype = self::DOCTYPE_HTML5;
 
     public function __construct()
     {
     }
 
-    public function generateHtml(ObjectBase $object)
+    /**
+     * Generated HTML tags from the given object.
+     */
+    public function generateHtml(ObjectBase $object): string
     {
         $html = "";
         $format = "<meta property=\"%s\" content=\"%s\"" . ($this->doctype == self::DOCTYPE_XHTML ? " />" : ">");
@@ -36,10 +39,10 @@ class Publisher
 
             if ($property->value === null) {
                 continue;
-            } elseif ($property->value instanceof \DateTime) {
+            } elseif ($property->value instanceof DateTimeInterface) {
                 $value = $property->value->format("c");
             } elseif (is_object($property->value)) {
-                throw new \UnexpectedValueException(
+                throw new UnexpectedValueException(
                     sprintf(
                         "Cannot handle value of type '%0' for property '%1'.",
                         get_class($property->value),

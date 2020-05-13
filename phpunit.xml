@@ -1,9 +1,7 @@
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/4.5/phpunit.xsd"
-         bootstrap="vendor/autoload.php">
+<phpunit bootstrap="vendor/autoload.php">
     <testsuites>
-        <testsuite name="Default">
-            <directory suffix=".php">tests</directory>
+        <testsuite name="OpenGraph">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
     <filter>

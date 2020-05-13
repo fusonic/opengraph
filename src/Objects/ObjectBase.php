@@ -2,11 +2,12 @@
 
 namespace Fusonic\OpenGraph\Objects;
 
-use Fusonic\Linq\Linq;
+use DateTimeImmutable;
 use Fusonic\OpenGraph\Elements\Audio;
 use Fusonic\OpenGraph\Elements\Image;
 use Fusonic\OpenGraph\Elements\Video;
 use Fusonic\OpenGraph\Property;
+use UnexpectedValueException;
 
 /**
  * Abstract base class for all Open Graph objects (website, video, ...)
@@ -16,100 +17,81 @@ abstract class ObjectBase
     /**
      * An array of audio resources attached to the object.
      *
-     * @var array|Audio[]
+     * @var Audio[]
      */
-    public $audios = [];
+    public array $audios = [];
 
     /**
      * A short description of the object.
-     *
-     * @var string
      */
-    public $description;
+    public ?string $description = null;
 
     /**
      * The word that appears before the object's title in a sentence. This is an list of words from 'a', 'an', 'the',
      * ' "" ', or 'auto'. If 'auto' is chosen, the consumer of the object will chose between 'a' or 'an'. The default is
      * the blank, "".
-     *
-     * @var string
      */
-    public $determiner;
+    public ?string $determiner = null;
 
     /**
      * An array of images attached to the object.
      *
-     * @var array|Image[]
+     * @var Image[]
      */
-    public $images = [];
+    public array $images = [];
 
     /**
      * The locale that the object's tags are marked up in, in the format language_TERRITORY.
-     *
-     * @var string
      */
-    public $locale;
+    public ?string $locale = null;
 
     /**
      * An array of alternate locales in which the resource is available.
      *
-     * @var array|string[]
+     * @var string[]
      */
-    public $localeAlternate = [];
+    public array $localeAlternate = [];
 
-    /**
-     * @var bool
-     */
-    public $richAttachment;
+    public ?bool $richAttachment = null;
 
     /**
      * An array of URLs of related resources.
      *
-     * @var array|string[]
+     * @var string[]
      */
-    public $seeAlso = [];
+    public array $seeAlso = [];
 
     /**
      * The name of the web site upon which the object resides.
-     *
-     * @var string
      */
-    public $siteName;
+    public ?string $siteName = null;
 
     /**
      * The title of the object as it should appear in the graph.
-     *
-     * @var string
      */
-    public $title;
+    public ?string $title = null;
 
     /**
      * The type of the object, such as 'article'.
-     *
-     * @var string
      */
-    public $type;
+    public ?string $type = null;
 
     /**
      * The time when the object was last updated.
-     *
-     * @var \DateTime
      */
-    public $updatedTime;
+    public ?DateTimeImmutable $updatedTime = null;
 
     /**
      * The canonical URL of the object, used as its ID in the graph.
-     *
-     * @var string
      */
-    public $url;
+    public ?string $url = null;
 
     /**
      * An array of videos attached to the object.
      *
-     * @var array|Video[]
+     * @var Video[]
      */
-    public $videos = [];
+    public array $videos = [];
 
     public function __construct()
     {
@@ -121,9 +103,9 @@ abstract class ObjectBase
      * @param   array|Property[]    $properties     Array of all properties to assign.
      * @param   bool                $debug          Throw exceptions when parsing or not.
      *
-     * @throws  \UnexpectedValueException
+     * @throws  UnexpectedValueException
      */
-    public function assignProperties(array $properties, $debug = false)
+    public function assignProperties(array $properties, $debug = false): void
     {
         foreach ($properties as $property) {
             $name = $property->key;
@@ -139,7 +121,7 @@ abstract class ObjectBase
                     if (count($this->audios) > 0) {
                         $this->handleAudioAttribute($this->audios[count($this->audios) - 1], $name, $value);
                     } elseif ($debug) {
-                        throw new \UnexpectedValueException(
+                        throw new UnexpectedValueException(
                             sprintf(
                                 "Found '%s' property but no audio was found before.",
                                 $name
@@ -169,7 +151,7 @@ abstract class ObjectBase
                     if (count($this->images) > 0) {
                         $this->handleImageAttribute($this->images[count($this->images) - 1], $name, $value);
                     } elseif ($debug) {
-                        throw new \UnexpectedValueException(
+                        throw new UnexpectedValueException(
                             sprintf(
                                 "Found '%s' property but no image was found before.",
                                 $name
@@ -202,7 +184,7 @@ abstract class ObjectBase
                     }
                     break;
                 case Property::UPDATED_TIME:
-                    if ($this->updatedTime === null && strtotime($value) !== false) {
+                    if ($this->updatedTime === null) {
                         $this->updatedTime = $this->convertToDateTime($value);
                     }
                     break;
@@ -222,18 +204,16 @@ abstract class ObjectBase
                     if (count($this->videos) > 0) {
                         $this->handleVideoAttribute($this->videos[count($this->videos) - 1], $name, $value);
                     } elseif ($debug) {
-                        throw new \UnexpectedValueException(
-                            sprintf(
-                                "Found '%s' property but no video was found before.",
-                                $name
-                            )
-                        );
+                        throw new UnexpectedValueException(sprintf(
+                            "Found '%s' property but no video was found before.",
+                            $name
+                        ));
                     }
             }
         }
     }
 
-    private function handleImageAttribute(Image $element, $name, $value)
+    private function handleImageAttribute(Image $element, string $name, string $value): void
     {
         switch($name)
         {
@@ -255,7 +235,7 @@ abstract class ObjectBase
         }
     }
 
-    private function handleVideoAttribute(Video $element, $name, $value)
+    private function handleVideoAttribute(Video $element, string $name, string $value): void
     {
         switch($name)
         {
@@ -274,7 +254,7 @@ abstract class ObjectBase
         }
     }
 
-    private function handleAudioAttribute(Audio $element, $name, $value)
+    private function handleAudioAttribute(Audio $element, string $name, string $value): void
     {
         switch($name)
         {
@@ -287,12 +267,16 @@ abstract class ObjectBase
         }
     }
 
-    protected function convertToDateTime($value)
+    protected function convertToDateTime(string $value): ?DateTimeImmutable
     {
-        return new \DateTime($value);
+        try {
+            return new DateTimeImmutable($value);
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
-    protected function convertToBoolean($value)
+    protected function convertToBoolean(string $value): bool
     {
         switch(strtolower($value))
         {
@@ -307,9 +291,9 @@ abstract class ObjectBase
     /**
      * Gets all properties set on this object.
      *
-     * @return  array|Property[]
+     * @return  Property[]
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         $properties = [];
 

@@ -2,11 +2,13 @@
 
 namespace Fusonic\OpenGraph;
 
+use DOMElement;
 use Fusonic\Linq\Linq;
 use Fusonic\OpenGraph\Objects\ObjectBase;
 use Fusonic\OpenGraph\Objects\Website;
-use GuzzleHttp\Adapter\AdapterInterface;
-use GuzzleHttp\Client;
+use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -14,59 +16,63 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 class Consumer
 {
-    private $client;
+    private ?ClientInterface $client;
+    private ?RequestFactoryInterface $requestFactory;
 
     /**
      * When enabled, crawler will read content of title and meta description if no
      * Open Graph data is provided by target page.
-     *
-     * @var bool
      */
-    public $useFallbackMode = false;
+    public bool $useFallbackMode = false;
 
     /**
      * When enabled, crawler will throw exceptions for some crawling errors like unexpected
      * Open Graph elements.
-     *
-     * @var bool
      */
-    public $debug = false;
+    public bool $debug = false;
 
     /**
-     * @param   AdapterInterface $adapter Guzzle adapter to use for making HTTP requests.
-     * @param   array            $config  Optional Guzzle config overrides.
+     * @param ClientInterface|null         $client         A PSR-18 ClientInterface implementation.
+     * @param RequestFactoryInterface|null $requestFactory A PSR-17 RequestFactoryInterface implementation.
      */
-    public function __construct(AdapterInterface $adapter = null, array $config = [])
+    public function __construct(?ClientInterface $client = null, ?RequestFactoryInterface $requestFactory = null)
     {
-        $config = array_replace_recursive(['adapter' => $adapter], $config);
-
-        $this->client = new Client($config);
+        $this->client = $client;
+        $this->requestFactory = $requestFactory;
     }
 
     /**
      * Fetches HTML content from the given URL and then crawls it for Open Graph data.
      *
-     * @param   string  $url            URL to be crawled.
+     * @param string $url URL to be crawled.
      *
-     * @return  Website
+     * @return ObjectBase
+     *
+     * @throws ClientExceptionInterface
      */
-    public function loadUrl($url)
+    public function loadUrl(string $url): ObjectBase
     {
-        // Fetch HTTP content using Guzzle
-        $response = $this->client->get($url);
+        if ($this->client === null) {
+            throw new \LogicException(
+                "To use loadUrl() you must provide \$client and \$requestFactory when instantiating the consumer."
+            );
+        }
 
-        return $this->loadHtml($response->getBody()->__toString(), $url);
+        $request = $this->requestFactory->createRequest("GET", $url);
+        $response = $this->client->sendRequest($request);
+
+        return $this->loadHtml($response->getBody()->getContents(), $url);
     }
 
     /**
      * Crawls the given HTML string for OpenGraph data.
      *
-     * @param   string  $html           HTML string, usually whole content of crawled web resource.
-     * @param   string  $fallbackUrl    URL to use when fallback mode is enabled.
+     * @param string $html        HTML string, usually whole content of crawled web resource.
+     * @param string $fallbackUrl URL to use when fallback mode is enabled.
      *
      * @return  ObjectBase
      */
-    public function loadHtml($html, $fallbackUrl = null)
+    public function loadHtml(string $html, string $fallbackUrl = null): ObjectBase
     {
         // Extract all data that can be found
         $page = $this->extractOpenGraphData($html);
@@ -80,7 +86,7 @@ class Consumer
         return $page;
     }
 
-    private function extractOpenGraphData($content)
+    private function extractOpenGraphData(string $content): ObjectBase
     {
         $crawler = new Crawler;
         $crawler->addHTMLContent($content, 'UTF-8');
@@ -93,7 +99,7 @@ class Consumer
             // Create clean property array
             $props = Linq::from($ogMetaTags)
                 ->select(
-                    function (\DOMElement $tag) use ($t) {
+                    function (DOMElement $tag) use ($t) {
                         $name = strtolower(trim($tag->getAttribute($t)));
                         $value = trim($tag->getAttribute("content"));
                         return new Property($name, $value);
