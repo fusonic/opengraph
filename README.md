@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/fusonic/opengraph/v/stable)](https://packagist.org/packages/fusonic/opengraph)
 [![Total Downloads](https://poser.pugx.org/fusonic/opengraph/downloads)](https://packagist.org/packages/fusonic/opengraph)
-[![Build Status](https://api.travis-ci.org/fusonic/opengraph.svg?branch=2.x)](https://travis-ci.org/fusonic/opengraph?branch=2.x)
+[![Build Status](https://api.travis-ci.org/fusonic/opengraph.svg)](https://travis-ci.org/fusonic/opengraph)
 [![License](https://poser.pugx.org/fusonic/opengraph/license)](https://packagist.org/packages/fusonic/opengraph)
 
 A simple library to read Open Graph data from the web and generate HTML code to publish your own Open Graph objects. A fallback mode enables you to read data from websites that do not implement the Open Graph protocol.
