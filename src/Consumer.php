@@ -6,6 +6,7 @@ use DOMElement;
 use Fusonic\Linq\Linq;
 use Fusonic\OpenGraph\Objects\ObjectBase;
 use Fusonic\OpenGraph\Objects\Website;
+use LogicException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -53,7 +54,7 @@ class Consumer
     public function loadUrl(string $url): ObjectBase
     {
         if ($this->client === null) {
-            throw new \LogicException(
+            throw new LogicException(
                 "To use loadUrl() you must provide \$client and \$requestFactory when instantiating the consumer."
             );
         }
@@ -129,7 +130,7 @@ class Consumer
         // Fallback for url
         if ($this->useFallbackMode && !$object->url) {
             $urlElement = $crawler->filter("link[rel='canonical']")->first();
-            if ($urlElement->count()) {
+            if ($urlElement->count() > 0) {
                 $object->url = trim($urlElement->attr("href"));
             }
         }
@@ -137,7 +138,7 @@ class Consumer
         // Fallback for title
         if ($this->useFallbackMode && !$object->title) {
             $titleElement = $crawler->filter("title")->first();
-            if ($titleElement) {
+            if ($titleElement->count() > 0) {
                 $object->title = trim($titleElement->text());
             }
         }
@@ -145,7 +146,7 @@ class Consumer
         // Fallback for description
         if ($this->useFallbackMode && !$object->description) {
             $descriptionElement = $crawler->filter("meta[property='description']")->first();
-            if ($descriptionElement) {
+            if ($descriptionElement->count() > 0) {
                 $object->description = trim($descriptionElement->attr("content"));
             }
         }
