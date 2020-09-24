@@ -7,7 +7,7 @@ require __DIR__ . "/../vendor/autoload.php";
 
 // Initialize new Psr\HttpClient implementation. This example uses Symfony's implementation from the symfony/http-client
 // package but you can use any implementation provided by your framework of choice.
-$client = new Psr18Client(new NativeHttpClient());
+$client = new Psr18Client(new NativeHttpClient([ "headers" => [ "User-Agent" => "facebookexternalhit/1.1" ] ]));
 
 // Create a new crawler
 $crawler = new Fusonic\OpenGraph\Consumer($client, $client);

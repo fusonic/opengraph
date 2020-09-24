@@ -130,6 +130,16 @@ _HTML code is formatted just for displaying purposes. You may choose between HTM
 
 You can run the test suite by running `phpunit` from the command line.
 
+## FAQ
+
+**I don't get any information from a webpage, but Facebook shows information for the same URL. What do I do wrong?**
+
+It seems that some pages (like Twitter) only publish OpenGraph information if Facebook's user agent string `facebookexternalhit/1.1` is used (see #28). So you should configure your PSR-18 client to use this user agent string:
+
+```php
+$client = new Psr18Client(new NativeHttpClient([ "headers" => [ "User-Agent" => "facebookexternalhit/1.1" ] ]));
+```
+
 ## License
 
 This library is licensed under the MIT license.
