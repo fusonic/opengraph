@@ -44,7 +44,7 @@ class Publisher
             } elseif (is_object($property->value)) {
                 throw new UnexpectedValueException(
                     sprintf(
-                        "Cannot handle value of type '%0' for property '%1'.",
+                        "Cannot handle value of type '%s' for property '%s'.",
                         get_class($property->value),
                         $property->key
                     )
