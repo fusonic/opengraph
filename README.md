@@ -21,13 +21,10 @@ See [ogp.me](http://ogp.me) for information on the Open Graph protocol.
 
 ## Installation
 
-The most flexible installation method is using Composer: Simply create a composer.json file in the root of your project:
-``` json
-{
-    "require": {
-        "fusonic/opengraph": "^2.0"
-    }
-}
+The most flexible installation method is using Composer:
+
+``` bash
+composer require fusonic/opengraph
 ```
 
 Install composer and run install command:
