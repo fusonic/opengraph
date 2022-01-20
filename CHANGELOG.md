@@ -1,5 +1,13 @@
 # CHANGELOG for 2.x
 
+## 2.2.0 (2022-01-20)
+
+* Added compatibility with Symfony ^6.0
+
+## 2.1.0 (2021-04-16)
+
+* PHP 8 compatibility
+
 ## 2.0.0 (2020-05-13)
 
 * Updated PHP version constraint to 7.4 and introduced type hints on all properties/methods
