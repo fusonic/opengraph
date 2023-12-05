@@ -2,8 +2,6 @@
 
 namespace Fusonic\OpenGraph;
 
-use DOMElement;
-use Fusonic\Linq\Linq;
 use Fusonic\OpenGraph\Objects\ObjectBase;
 use Fusonic\OpenGraph\Objects\Website;
 use LogicException;
@@ -97,32 +95,20 @@ class Consumer
         {
             // Get all meta-tags starting with "og:"
             $ogMetaTags = $crawler->filter("meta[{$t}^='og:']");
+
             // Create clean property array
-            $props = Linq::from($ogMetaTags)
-                ->select(
-                    function (DOMElement $tag) use ($t) {
-                        $name = strtolower(trim($tag->getAttribute($t)));
-                        $value = trim($tag->getAttribute("content"));
-                        return new Property($name, $value);
-                    }
-                )
-                ->toArray();
+            $props = [];
+            foreach ($ogMetaTags as $tag) {
+                $name = strtolower(trim($tag->getAttribute($t)));
+                $value = trim($tag->getAttribute("content"));
+                $props[] = new Property($name, $value);
+            }
+
             $properties = array_merge($properties, $props);
-          
         }
             
-        // Create new object of the correct type
-        $typeProperty = Linq::from($properties)
-            ->firstOrNull(
-                function (Property $property) {
-                    return $property->key === Property::TYPE;
-                }
-            );
-        switch ($typeProperty !== null ? $typeProperty->value : null) {
-            default:
-                $object = new Website();
-                break;
-        }
+        // Create new object
+        $object = new Website();
 
         // Assign all properties to the object
         $object->assignProperties($properties, $this->debug);

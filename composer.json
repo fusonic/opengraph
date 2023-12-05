@@ -26,7 +26,6 @@
         "ext-dom": "*",
         "symfony/dom-crawler": "^3.0|^4.0|^5.0|^6.0",
         "symfony/css-selector": "^3.0|^4.0|^5.0|^6.0",
-        "fusonic/linq": "^1.0",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0"
     },
