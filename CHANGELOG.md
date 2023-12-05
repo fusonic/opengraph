@@ -1,5 +1,13 @@
 # CHANGELOG for 2.x
 
+## 3.0.0
+
+* Increased minimum requirement to PHP 8.0
+
+## 2.3.0 (2023-12-05)
+
+* Dropped dependency to deprecated fusonic/linq library
+
 ## 2.2.0 (2022-01-20)
 
 * Added compatibility with Symfony ^6.0
