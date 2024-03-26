@@ -50,23 +50,23 @@ $consumer = new Consumer($httpClient, $httpRequestFactory);
 $object = $consumer->loadUrl("http://www.youtube.com/watch?v=P422jZg50X4");
 
 // Basic information of the object
-echo "Title: " . $object->title;                // Getting started with Facebook Open Graph
-echo "Site name: " . $object->siteName;         // YouTube
-echo "Description: " . $object->description;    // Originally recorded at the Facebook World ...
-echo "Canonical URL: " . $object->url;          // http://www.youtube.com/watch?v=P422jZg50X4
+echo "Title: " . $object->title;                 // Getting started with Facebook Open Graph
+echo "Site name: " . $object->siteName;          // YouTube
+echo "Description: " . $object->description;     // Originally recorded at the Facebook World ...
+echo "Canonical URL: " . $object->url;           // http://www.youtube.com/watch?v=P422jZg50X4
 
 // Images
 $image = $object->images[0];
-echo "Image[0] URL: " . $image->url             // https://i1.ytimg.com/vi/P422jZg50X4/maxresdefault.jpg
-echo "Image[0] height: " . $image->height       // null (May return height in pixels on other pages)
-echo "Image[0] width: " . $image->width         // null (May return width in pixels on other pages)
+echo "Image[0] URL: " . $image->url;             // https://i1.ytimg.com/vi/P422jZg50X4/maxresdefault.jpg
+echo "Image[0] height: " . $image->height;       // null (May return height in pixels on other pages)
+echo "Image[0] width: " . $image->width;         // null (May return width in pixels on other pages)
 
 // Videos
 $video = $object->videos[0];
-echo "Video URL: " . $video->url                // http://www.youtube.com/v/P422jZg50X4?version=3&autohide=1
-echo "Video height: " . $video->height          // 1080
-echo "Video width: " . $video->width            // 1920
-echo "Video type: " . $video->type              // application/x-shockwave-flash
+echo "Video URL: " . $video->url;                // http://www.youtube.com/v/P422jZg50X4?version=3&autohide=1
+echo "Video height: " . $video->height;          // 1080
+echo "Video width: " . $video->width;            // 1920
+echo "Video type: " . $video->type;              // application/x-shockwave-flash
 ```
 
 _There are some more properties but these are the basic and most commonly used ones._
