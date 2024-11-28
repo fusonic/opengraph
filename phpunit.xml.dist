@@ -26,16 +26,17 @@
         </testsuite>
     </testsuites>
 
-    <source ignoreIndirectDeprecations="true"
-            ignoreSuppressionOfDeprecations="true"
-            ignoreSuppressionOfPhpDeprecations="true"
-            restrictNotices="true"
+    <source restrictNotices="true"
             ignoreSuppressionOfNotices="true"
             ignoreSuppressionOfPhpNotices="true"
             restrictWarnings="true"
             ignoreSuppressionOfWarnings="true"
             ignoreSuppressionOfPhpWarnings="true"
             ignoreSuppressionOfErrors="true">
+            <!-- Add to source tag once PHP 8.1 support is dropped and only PHPUnit 11 is used -->
+            <!-- ignoreIndirectDeprecations="true" -->
+            <!-- ignoreSuppressionOfDeprecations="true" -->
+            <!-- ignoreSuppressionOfPhpDeprecations="true" -->
         <include>
             <directory>src</directory>
         </include>

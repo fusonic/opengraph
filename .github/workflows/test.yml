@@ -1,0 +1,42 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test with PHP ${{ matrix.php-versions }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: [8.1, 8.2, 8.3] # TODO - Add 8.4 once all tools/dependencies support it
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v3
+
+      - name: Run PHP-CS-Fixer
+        run: composer phpcs:check
+
+      - name: Run PHPStan
+        run: composer phpstan
+
+      - name: Run PHPUnit
+        run: composer test

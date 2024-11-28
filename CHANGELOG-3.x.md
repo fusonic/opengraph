@@ -13,3 +13,4 @@
   `phpstan/phpstan-strict-rules` and fixed reported errors
   - Added `composer phpstan` script for validating code
 - Updated documentation
+- Switched to GitHub actions for automated testing
