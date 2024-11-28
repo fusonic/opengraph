@@ -33,12 +33,15 @@
     },
     "require-dev": {
         "nyholm/psr7": "^1.2",
-        "phpunit/phpunit": "^9.0",
+        "phpunit/phpunit": "^11.4",
         "symfony/http-client": "^5.4 || ^6.4 || ^7.1"
     },
     "suggest": {
         "symfony/http-client": "^5.4 || ^6.4 || ^7.1",
         "nyholm/psr7": "^1.2"
+    },
+    "scripts": {
+        "test": "XDEBUG_MODE=off vendor/bin/phpunit --testdox"
     },
     "config": {
         "sort-packages": true

@@ -5,34 +5,60 @@ namespace Fusonic\OpenGraph\Test;
 use DateTime;
 use Fusonic\OpenGraph\Publisher;
 use Fusonic\OpenGraph\Test\TestData\TestPublishObject;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use UnexpectedValueException;
 
-class PublisherTest extends TestCase
+final class PublisherTest extends TestCase
 {
-    /**
-     * @var Publisher
-     */
-    private $publisher;
-
-    protected function setUp(): void
+    public function testGenerateHtmlNull(): void
     {
-        $this->publisher = new Publisher();
+        // arrange
+        $publisher = new Publisher();
 
-        parent::setUp();
-    }
-
-    public function testGenerateHtmlNull()
-    {
         $object = new TestPublishObject(null);
 
-        $result = $this->publisher->generateHtml($object);
+        // act
+        $result = $publisher->generateHtml($object);
 
-        $this->assertEquals("", $result);
+        // assert
+        self::assertSame('', $result);
     }
 
-    public function generateHtmlValuesProvider()
+    #[DataProvider('generateHtmlValuesProvider')]
+    public function testGenerateHtmlValues($value, $expectedContent)
+    {
+        // arrange
+        $publisher = new Publisher();
+
+        $object = new TestPublishObject($value);
+
+        // act
+        $result = $publisher->generateHtml($object);
+
+        // assert
+        self::assertSame(
+            expected: \sprintf('<meta property="%s" content="%s">', TestPublishObject::KEY, $expectedContent),
+            actual: $result
+        );
+    }
+
+    public function testGenerateHtmlUnsupportedObject(): void
+    {
+        // assert
+        $this->expectException(UnexpectedValueException::class);
+
+        // arrange
+        $publisher = new Publisher();
+
+        $object = new TestPublishObject(new stdClass());
+
+        // act
+        $publisher->generateHtml($object);
+    }
+
+    public static function generateHtmlValuesProvider(): array
     {
         return [
             "Boolean true" =>           [ true,                                         "1" ],
@@ -46,26 +72,5 @@ class PublisherTest extends TestCase
             "String with quotes" =>     [ "some \" quotes",                             "some &quot; quotes" ],
             "String with ampersands" => [ "some & ampersand",                           "some &amp; ampersand" ],
         ];
-    }
-
-    /**
-     * @dataProvider generateHtmlValuesProvider
-     */
-    public function testGenerateHtmlValues($value, $expectedContent)
-    {
-        $object = new TestPublishObject($value);
-
-        $result = $this->publisher->generateHtml($object);
-
-        $this->assertEquals('<meta property="' . TestPublishObject::KEY . '" content="' . $expectedContent . '">', $result);
-    }
-
-    public function testGenerateHtmlUnsupportedObject()
-    {
-        $this->expectException(UnexpectedValueException::class);
-
-        $object = new TestPublishObject(new stdClass());
-
-        $this->publisher->generateHtml($object);
     }
 }

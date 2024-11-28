@@ -5,17 +5,14 @@ namespace Fusonic\OpenGraph\Test\TestData;
 use Fusonic\OpenGraph\Objects\ObjectBase;
 use Fusonic\OpenGraph\Property;
 
-class TestPublishObject extends ObjectBase
+final class TestPublishObject extends ObjectBase
 {
     const KEY = "og:title";
 
-    private $value;
-
-    public function __construct($value)
-    {
+    public function __construct(
+        private readonly mixed $value
+    ) {
         parent::__construct();
-
-        $this->value = $value;
     }
 
     public function getProperties(): array

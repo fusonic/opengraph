@@ -5,13 +5,14 @@ namespace Fusonic\OpenGraph\Test;
 use Fusonic\OpenGraph\Consumer;
 use PHPUnit\Framework\TestCase;
 
-class ConsumerTest extends TestCase
+final class ConsumerTest extends TestCase
 {
     /**
      * Checks crawler to read basic properties.
      */
-    public function testLoadHtmlBasics()
+    public function testLoadHtmlBasics(): void
     {
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -34,27 +35,30 @@ LONG;
 
         $consumer = new Consumer();
 
-        $res = $consumer->loadHtml($content, "about:blank");
+        // act
+        $result = $consumer->loadHtml($content, "about:blank");
 
-        $this->assertEquals("Description", $res->description);
-        $this->assertEquals("auto", $res->determiner);
-        $this->assertEquals("en_GB", $res->locale);
-        $this->assertContains("en_US", $res->localeAlternate);
-        $this->assertContains("de_AT", $res->localeAlternate);
-        $this->assertTrue($res->richAttachment);
-        $this->assertContains("https://github.com/fusonic/fusonic-linq", $res->seeAlso);
-        $this->assertContains("https://github.com/fusonic/fusonic-spreadsheetexport", $res->seeAlso);
-        $this->assertEquals("Site name", $res->siteName);
-        $this->assertEquals("Title", $res->title);
-        $this->assertTrue($res->updatedTime instanceof \DateTimeInterface);
-        $this->assertEquals("https://github.com/fusonic/fusonic-opengraph", $res->url);
+        // assert
+        self::assertSame('Description', $result->description);
+        self::assertSame('auto', $result->determiner);
+        self::assertSame('en_GB', $result->locale);
+        self::assertContains('en_US', $result->localeAlternate);
+        self::assertContains('de_AT', $result->localeAlternate);
+        self::assertTrue($result->richAttachment);
+        self::assertContains('https://github.com/fusonic/fusonic-linq', $result->seeAlso);
+        self::assertContains('https://github.com/fusonic/fusonic-spreadsheetexport', $result->seeAlso);
+        self::assertSame('Site name', $result->siteName);
+        self::assertSame('Title', $result->title);
+        self::assertInstanceOf(\DateTimeInterface::class, $result->updatedTime);
+        self::assertSame('https://github.com/fusonic/fusonic-opengraph', $result->url);
     }
 
     /**
      * Checks crawler not to use fallback if disabled even if no OG data is provided.
      */
-    public function testLoadHtmlFallbacksOff()
+    public function testLoadHtmlFallbacksOff(): void
     {
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -67,18 +71,21 @@ LONG;
 
         $consumer = new Consumer();
 
-        $res = $consumer->loadHtml($content, "about:blank");
+        // act
+        $result = $consumer->loadHtml($content, "about:blank");
 
-        $this->assertNull($res->description);
-        $this->assertNull($res->title);
-        $this->assertNull($res->url);
+        // assert
+        self::assertNull($result->description);
+        self::assertNull($result->title);
+        self::assertNull($result->url);
     }
 
     /**
      * Checks crawler to correctly use fallback elements when activated.
      */
-    public function testLoadHtmlFallbacksOn()
+    public function testLoadHtmlFallbacksOn(): void
     {
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -92,18 +99,21 @@ LONG;
         $consumer = new Consumer();
         $consumer->useFallbackMode = true;
 
-        $res = $consumer->loadHtml($content, "about:blank");
+        // act
+        $result = $consumer->loadHtml($content, "about:blank");
 
-        $this->assertEquals("Description", $res->description);
-        $this->assertEquals("Title", $res->title);
-        $this->assertEquals("about:blank", $res->url);
+        // assert
+        self::assertSame("Description", $result->description);
+        self::assertSame("Title", $result->title);
+        self::assertSame("about:blank", $result->url);
     }
 
     /**
      * Checks crawler to correctly use fallback elements when activated.
      */
-    public function testLoadHtmlCanonicalLinkFallbacksOn()
+    public function testLoadHtmlCanonicalLinkFallbacksOn(): void
     {
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -118,19 +128,22 @@ LONG;
         $consumer = new Consumer();
         $consumer->useFallbackMode = true;
 
-        $res = $consumer->loadHtml($content, "about:blank");
+        // act
+        $result = $consumer->loadHtml($content, "about:blank");
 
-        $this->assertEquals("Description", $res->description);
-        $this->assertEquals("Title", $res->title);
-        $this->assertEquals("https://github.com/fusonic/opengraph", $res->url);
+        // assert
+        self::assertSame("Description", $result->description);
+        self::assertSame("Title", $result->title);
+        self::assertSame("https://github.com/fusonic/opengraph", $result->url);
     }
 
     /**
      * Checks crawler to handle arrays of elements with child-properties like described in the
      * Open Graph documentation (http://ogp.me/#array).
      */
-    public function testLoadHtmlArrayHandling()
+    public function testLoadHtmlArrayHandling(): void
     {
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -147,22 +160,25 @@ LONG;
 
         $consumer = new Consumer();
 
-        $res = $consumer->loadHtml($content);
+        // act
+        $result = $consumer->loadHtml($content);
 
-        $this->assertEquals(3, count($res->images));
-        $this->assertEquals("http://example.com/rock.jpg", $res->images[0]->url);
-        $this->assertEquals(300, $res->images[0]->width);
-        $this->assertEquals(300, $res->images[0]->height);
-        $this->assertEquals("http://example.com/rock2.jpg", $res->images[1]->url);
-        $this->assertNull($res->images[1]->width);
-        $this->assertNull($res->images[1]->height);
-        $this->assertEquals("http://example.com/rock3.jpg", $res->images[2]->url);
-        $this->assertNull($res->images[2]->width);
-        $this->assertEquals(1000, $res->images[2]->height);
+        // assert
+        self::assertSame(3, count($result->images));
+        self::assertSame("http://example.com/rock.jpg", $result->images[0]->url);
+        self::assertSame(300, $result->images[0]->width);
+        self::assertSame(300, $result->images[0]->height);
+        self::assertSame("http://example.com/rock2.jpg", $result->images[1]->url);
+        self::assertNull($result->images[1]->width);
+        self::assertNull($result->images[1]->height);
+        self::assertSame("http://example.com/rock3.jpg", $result->images[2]->url);
+        self::assertNull($result->images[2]->width);
+        self::assertSame(1000, $result->images[2]->height);
     }
 
-    public function testLoadHtmlImages()
+    public function testLoadHtmlImages(): void
     {
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -178,18 +194,21 @@ LONG;
 
         $consumer = new Consumer();
 
-        $res = $consumer->loadHtml($content);
+        // act
+        $result = $consumer->loadHtml($content);
 
-        $this->assertEquals(1, count($res->images));
-        $this->assertEquals("http://example.com/rock.jpg", $res->images[0]->url);
-        $this->assertEquals("https://example.com/rock.jpg", $res->images[0]->secureUrl);
-        $this->assertEquals(300, $res->images[0]->width);
-        $this->assertEquals(300, $res->images[0]->height);
-        $this->assertEquals("image/jpg", $res->images[0]->type);
+        // assert
+        self::assertSame(1, count($result->images));
+        self::assertSame("http://example.com/rock.jpg", $result->images[0]->url);
+        self::assertSame("https://example.com/rock.jpg", $result->images[0]->secureUrl);
+        self::assertSame(300, $result->images[0]->width);
+        self::assertSame(300, $result->images[0]->height);
+        self::assertSame("image/jpg", $result->images[0]->type);
     }
 
-    public function testLoadHtmlVideos()
+    public function testLoadHtmlVideos(): void
     {
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -205,18 +224,21 @@ LONG;
 
         $consumer = new Consumer();
 
-        $res = $consumer->loadHtml($content);
+        // act
+        $result = $consumer->loadHtml($content);
 
-        $this->assertEquals(1, count($res->videos));
-        $this->assertEquals("http://example.com/rock.ogv", $res->videos[0]->url);
-        $this->assertEquals("https://example.com/rock.ogv", $res->videos[0]->secureUrl);
-        $this->assertEquals(300, $res->videos[0]->width);
-        $this->assertEquals(300, $res->videos[0]->height);
-        $this->assertEquals("video/ogv", $res->videos[0]->type);
+        // assert
+        self::assertSame(1, count($result->videos));
+        self::assertSame("http://example.com/rock.ogv", $result->videos[0]->url);
+        self::assertSame("https://example.com/rock.ogv", $result->videos[0]->secureUrl);
+        self::assertSame(300, $result->videos[0]->width);
+        self::assertSame(300, $result->videos[0]->height);
+        self::assertSame("video/ogv", $result->videos[0]->type);
     }
 
-    public function testLoadHtmlAudios()
+    public function testLoadHtmlAudios(): void
     {
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -230,16 +252,19 @@ LONG;
 
         $consumer = new Consumer();
 
-        $res = $consumer->loadHtml($content);
+        // act
+        $result = $consumer->loadHtml($content);
 
-        $this->assertEquals(1, count($res->audios));
-        $this->assertEquals("http://example.com/rock.mp3", $res->audios[0]->url);
-        $this->assertEquals("https://example.com/rock.mp3", $res->audios[0]->secureUrl);
-        $this->assertEquals("audio/mp3", $res->audios[0]->type);
+        // assert
+        self::assertSame(1, count($result->audios));
+        self::assertSame("http://example.com/rock.mp3", $result->audios[0]->url);
+        self::assertSame("https://example.com/rock.mp3", $result->audios[0]->secureUrl);
+        self::assertSame("audio/mp3", $result->audios[0]->type);
     }
 
-    public function testCrawlHtmlImageExceptionDebugOff()
+    public function testCrawlHtmlImageExceptionDebugOff(): void
     {
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -251,15 +276,19 @@ LONG;
 
         $consumer = new Consumer();
 
-        $res = $consumer->loadHtml($content);
+        // act
+        $result = $consumer->loadHtml($content);
 
-        $this->assertEquals(0, count($res->images));
+        // assert
+        self::assertSame(0, count($result->images));
     }
 
-    public function testCrawlHtmlImageExceptionDebugOn()
+    public function testCrawlHtmlImageExceptionDebugOn(): void
     {
+        // assert
         $this->expectException(\UnexpectedValueException::class);
 
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -272,11 +301,13 @@ LONG;
         $consumer = new Consumer();
         $consumer->debug = true;
 
-        $res = $consumer->loadHtml($content);
+        // act
+        $consumer->loadHtml($content);
     }
 
-    public function testCrawlHtmlVideoExceptionDebugOff()
+    public function testCrawlHtmlVideoExceptionDebugOff(): void
     {
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -288,15 +319,19 @@ LONG;
 
         $consumer = new Consumer();
 
-        $res = $consumer->loadHtml($content);
+        // act
+        $result = $consumer->loadHtml($content);
 
-        $this->assertEquals(0, count($res->videos));
+        // assert
+        self::assertSame(0, count($result->videos));
     }
 
-    public function testCrawlHtmlVideoExceptionDebugOn()
+    public function testCrawlHtmlVideoExceptionDebugOn(): void
     {
+        // assert
         $this->expectException(\UnexpectedValueException::class);
 
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -309,11 +344,13 @@ LONG;
         $consumer = new Consumer();
         $consumer->debug = true;
 
-        $res = $consumer->loadHtml($content);
+        // act
+        $consumer->loadHtml($content);
     }
 
-    public function testCrawlHtmlAudioExceptionDebugOff()
+    public function testCrawlHtmlAudioExceptionDebugOff(): void
     {
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -325,15 +362,19 @@ LONG;
 
         $consumer = new Consumer();
 
-        $res = $consumer->loadHtml($content);
+        // act
+        $result = $consumer->loadHtml($content);
 
-        $this->assertEquals(0, count($res->audios));
+        // assert
+        self::assertSame(0, count($result->audios));
     }
 
-    public function testCrawlHtmlAudioExceptionDebugOn()
+    public function testCrawlHtmlAudioExceptionDebugOn(): void
     {
+        // assert
         $this->expectException(\UnexpectedValueException::class);
 
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -346,11 +387,13 @@ LONG;
         $consumer = new Consumer();
         $consumer->debug = true;
 
-        $res = $consumer->loadHtml($content);
+        // act
+        $consumer->loadHtml($content);
     }
 
-    public function testLoadHtmlSpecialCharacters()
+    public function testLoadHtmlSpecialCharacters(): void
     {
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -362,13 +405,16 @@ LONG;
 
         $consumer = new Consumer();
 
-        $res = $consumer->loadHtml($content);
+        // act
+        $result = $consumer->loadHtml($content);
 
-        $this->assertEquals("Apples & Bananas - just \"Fruits\"", $res->title);
+        // assert
+        self::assertSame("Apples & Bananas - just \"Fruits\"", $result->title);
     }
-    
-    public function testReadMetaName()
+
+    public function testReadMetaName(): void
     {
+        // arrange
         $content = <<<LONG
 <html>
 <head>
@@ -380,8 +426,10 @@ LONG;
 
         $consumer = new Consumer();
 
-        $res = $consumer->loadHtml($content);
+        // act
+        $result = $consumer->loadHtml($content);
 
-        $this->assertEquals("A 'name' attribute instead of 'property'", $res->title);
+        // assert
+        self::assertSame("A 'name' attribute instead of 'property'", $result->title);
     }
 }

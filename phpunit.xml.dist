@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         cacheDirectory=".phpunit.cache"
+         executionOrder="depends,defects"
+         colors="true"
+         beStrictAboutCoverageMetadata="true"
+         beStrictAboutOutputDuringTests="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         displayDetailsOnTestsThatTriggerErrors="true"
+         failOnRisky="true"
+         failOnNotice="true"
+         failOnWarning="true">
+    <php>
+        <ini name="display_errors" value="1"/>
+        <ini name="error_reporting" value="-1"/>
+        <ini name="memory_limit" value="512M"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="Fusonic OpenGraph">
+            <directory>./tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <source ignoreIndirectDeprecations="true"
+            ignoreSuppressionOfDeprecations="true"
+            ignoreSuppressionOfPhpDeprecations="true"
+            restrictNotices="true"
+            ignoreSuppressionOfNotices="true"
+            ignoreSuppressionOfPhpNotices="true"
+            restrictWarnings="true"
+            ignoreSuppressionOfWarnings="true"
+            ignoreSuppressionOfPhpWarnings="true"
+            ignoreSuppressionOfErrors="true">
+        <include>
+            <directory>src</directory>
+        </include>
+    </source>
+</phpunit>
