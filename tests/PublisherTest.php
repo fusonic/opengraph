@@ -1,14 +1,18 @@
 <?php
 
+/*
+ * Copyright (c) Fusonic GmbH. All rights reserved.
+ * Licensed under the MIT License. See LICENSE file in the project root for license information.
+ */
+
+declare(strict_types=1);
+
 namespace Fusonic\OpenGraph\Test;
 
-use DateTime;
 use Fusonic\OpenGraph\Publisher;
 use Fusonic\OpenGraph\Test\TestData\TestPublishObject;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use stdClass;
-use UnexpectedValueException;
 
 final class PublisherTest extends TestCase
 {
@@ -47,12 +51,12 @@ final class PublisherTest extends TestCase
     public function testGenerateHtmlUnsupportedObject(): void
     {
         // assert
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(\UnexpectedValueException::class);
 
         // arrange
         $publisher = new Publisher();
 
-        $object = new TestPublishObject(new stdClass());
+        $object = new TestPublishObject(new \stdClass());
 
         // act
         $publisher->generateHtml($object);
@@ -61,16 +65,16 @@ final class PublisherTest extends TestCase
     public static function generateHtmlValuesProvider(): array
     {
         return [
-            "Boolean true" =>           [ true,                                         "1" ],
-            "Boolean false" =>          [ false,                                        "0" ],
-            "Integer 1" =>              [ 1,                                            "1" ],
-            "Integer -1" =>             [ -1,                                           "-1" ],
-            "Float 1.11111" =>          [ 1.11111,                                      "1.11111" ],
-            "Float -1.11111" =>         [ -1.11111,                                     "-1.11111" ],
-            "DateTime" =>               [ new DateTime("2014-07-21T20:14:00+02:00"),   "2014-07-21T20:14:00+02:00" ],
-            "String" =>                 [ "string",                                     "string" ],
-            "String with quotes" =>     [ "some \" quotes",                             "some &quot; quotes" ],
-            "String with ampersands" => [ "some & ampersand",                           "some &amp; ampersand" ],
+            'Boolean true' => [true, '1'],
+            'Boolean false' => [false, '0'],
+            'Integer 1' => [1, '1'],
+            'Integer -1' => [-1, '-1'],
+            'Float 1.11111' => [1.11111, '1.11111'],
+            'Float -1.11111' => [-1.11111, '-1.11111'],
+            'DateTime' => [new \DateTime('2014-07-21T20:14:00+02:00'), '2014-07-21T20:14:00+02:00'],
+            'String' => ['string', 'string'],
+            'String with quotes' => ['some " quotes', 'some &quot; quotes'],
+            'String with ampersands' => ['some & ampersand', 'some &amp; ampersand'],
         ];
     }
 }

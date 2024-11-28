@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Copyright (c) Fusonic GmbH. All rights reserved.
+ * Licensed under the MIT License. See LICENSE file in the project root for license information.
+ */
+
+declare(strict_types=1);
+
 namespace Fusonic\OpenGraph\Elements;
 
 use Fusonic\OpenGraph\Property;
@@ -11,54 +18,46 @@ class Audio extends ElementBase
 {
     /**
      * The URL of an audio resource associated with the object.
-     *
-     * @var string
      */
-    public $url;
+    public ?string $url = null;
 
     /**
      * An alternate URL to use if an audio resource requires HTTPS.
-     *
-     * @var string
      */
-    public $secureUrl;
+    public ?string $secureUrl = null;
 
     /**
      * The MIME type of an audio resource associated with the object.
-     *
-     * @var type
      */
-    public $type;
+    public ?string $type = null;
 
     /**
-     * @param   string      $url            URL to the audio file.
+     * @param string $url URL to the audio file
      */
-    public function __construct($url)
+    public function __construct(string $url)
     {
-        parent::__construct();
-
         $this->url = $url;
     }
 
     /**
      * Gets all properties set on this element.
      *
-     * @return  array|Property[]
+     * @return Property[]
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         $properties = [];
 
         // URL must precede all other properties
-        if ($this->url !== null) {
+        if (null !== $this->url) {
             $properties[] = new Property(Property::AUDIO_URL, $this->url);
         }
 
-        if ($this->secureUrl !== null) {
+        if (null !== $this->secureUrl) {
             $properties[] = new Property(Property::AUDIO_SECURE_URL, $this->secureUrl);
         }
 
-        if ($this->type !== null) {
+        if (null !== $this->type) {
             $properties[] = new Property(Property::AUDIO_TYPE, $this->type);
         }
 

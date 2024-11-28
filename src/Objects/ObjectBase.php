@@ -1,16 +1,21 @@
 <?php
 
+/*
+ * Copyright (c) Fusonic GmbH. All rights reserved.
+ * Licensed under the MIT License. See LICENSE file in the project root for license information.
+ */
+
+declare(strict_types=1);
+
 namespace Fusonic\OpenGraph\Objects;
 
-use DateTimeImmutable;
 use Fusonic\OpenGraph\Elements\Audio;
 use Fusonic\OpenGraph\Elements\Image;
 use Fusonic\OpenGraph\Elements\Video;
 use Fusonic\OpenGraph\Property;
-use UnexpectedValueException;
 
 /**
- * Abstract base class for all Open Graph objects (website, video, ...)
+ * Abstract base class for all Open Graph objects (website, video, ...).
  */
 abstract class ObjectBase
 {
@@ -79,7 +84,7 @@ abstract class ObjectBase
     /**
      * The time when the object was last updated.
      */
-    public ?DateTimeImmutable $updatedTime = null;
+    public ?\DateTimeImmutable $updatedTime = null;
 
     /**
      * The canonical URL of the object, used as its ID in the graph.
@@ -93,36 +98,32 @@ abstract class ObjectBase
      */
     public array $videos = [];
 
-    public function __construct()
-    {
-    }
-
     /**
      * Assigns all properties given to the this Object instance.
      *
-     * @param   array|Property[]    $properties     Array of all properties to assign.
-     * @param   bool                $debug          Throw exceptions when parsing or not.
+     * @param array|Property[] $properties array of all properties to assign
+     * @param bool             $debug      throw exceptions when parsing or not
      *
-     * @throws  UnexpectedValueException
+     * @throws \UnexpectedValueException
      */
-    public function assignProperties(array $properties, $debug = false): void
+    public function assignProperties(array $properties, bool $debug = false): void
     {
         foreach ($properties as $property) {
             $name = $property->key;
             $value = $property->value;
 
-            switch($name) {
+            switch ($name) {
                 case Property::AUDIO:
                 case Property::AUDIO_URL:
                     $this->audios[] = new Audio($value);
                     break;
                 case Property::AUDIO_SECURE_URL:
                 case Property::AUDIO_TYPE:
-                    if (count($this->audios) > 0) {
-                        $this->handleAudioAttribute($this->audios[count($this->audios) - 1], $name, $value);
+                    if (\count($this->audios) > 0) {
+                        $this->handleAudioAttribute($this->audios[\count($this->audios) - 1], $name, $value);
                     } elseif ($debug) {
-                        throw new UnexpectedValueException(
-                            sprintf(
+                        throw new \UnexpectedValueException(
+                            \sprintf(
                                 "Found '%s' property but no audio was found before.",
                                 $name
                             )
@@ -130,12 +131,12 @@ abstract class ObjectBase
                     }
                     break;
                 case Property::DESCRIPTION:
-                    if ($this->description === null) {
+                    if (null === $this->description) {
                         $this->description = $value;
                     }
                     break;
                 case Property::DETERMINER:
-                    if ($this->determiner === null) {
+                    if (null === $this->determiner) {
                         $this->determiner = $value;
                     }
                     break;
@@ -148,11 +149,11 @@ abstract class ObjectBase
                 case Property::IMAGE_TYPE:
                 case Property::IMAGE_WIDTH:
                 case Property::IMAGE_USER_GENERATED:
-                    if (count($this->images) > 0) {
-                        $this->handleImageAttribute($this->images[count($this->images) - 1], $name, $value);
+                    if (\count($this->images) > 0) {
+                        $this->handleImageAttribute($this->images[\count($this->images) - 1], $name, $value);
                     } elseif ($debug) {
-                        throw new UnexpectedValueException(
-                            sprintf(
+                        throw new \UnexpectedValueException(
+                            \sprintf(
                                 "Found '%s' property but no image was found before.",
                                 $name
                             )
@@ -160,7 +161,7 @@ abstract class ObjectBase
                     }
                     break;
                 case Property::LOCALE:
-                    if ($this->locale === null) {
+                    if (null === $this->locale) {
                         $this->locale = $value;
                     }
                     break;
@@ -174,22 +175,22 @@ abstract class ObjectBase
                     $this->seeAlso[] = $value;
                     break;
                 case Property::SITE_NAME:
-                    if ($this->siteName === null) {
+                    if (null === $this->siteName) {
                         $this->siteName = $value;
                     }
                     break;
                 case Property::TITLE:
-                    if ($this->title === null) {
+                    if (null === $this->title) {
                         $this->title = $value;
                     }
                     break;
                 case Property::UPDATED_TIME:
-                    if ($this->updatedTime === null) {
+                    if (null === $this->updatedTime) {
                         $this->updatedTime = $this->convertToDateTime($value);
                     }
                     break;
                 case Property::URL:
-                    if ($this->url === null) {
+                    if (null === $this->url) {
                         $this->url = $value;
                     }
                     break;
@@ -201,10 +202,10 @@ abstract class ObjectBase
                 case Property::VIDEO_SECURE_URL:
                 case Property::VIDEO_TYPE:
                 case Property::VIDEO_WIDTH:
-                    if (count($this->videos) > 0) {
-                        $this->handleVideoAttribute($this->videos[count($this->videos) - 1], $name, $value);
+                    if (\count($this->videos) > 0) {
+                        $this->handleVideoAttribute($this->videos[\count($this->videos) - 1], $name, $value);
                     } elseif ($debug) {
-                        throw new UnexpectedValueException(sprintf(
+                        throw new \UnexpectedValueException(\sprintf(
                             "Found '%s' property but no video was found before.",
                             $name
                         ));
@@ -215,13 +216,12 @@ abstract class ObjectBase
 
     private function handleImageAttribute(Image $element, string $name, string $value): void
     {
-        switch($name)
-        {
+        switch ($name) {
             case Property::IMAGE_HEIGHT:
-                $element->height = (int)$value;
+                $element->height = (int) $value;
                 break;
             case Property::IMAGE_WIDTH:
-                $element->width = (int)$value;
+                $element->width = (int) $value;
                 break;
             case Property::IMAGE_TYPE:
                 $element->type = $value;
@@ -237,13 +237,12 @@ abstract class ObjectBase
 
     private function handleVideoAttribute(Video $element, string $name, string $value): void
     {
-        switch($name)
-        {
+        switch ($name) {
             case Property::VIDEO_HEIGHT:
-                $element->height = (int)$value;
+                $element->height = (int) $value;
                 break;
             case Property::VIDEO_WIDTH:
-                $element->width = (int)$value;
+                $element->width = (int) $value;
                 break;
             case Property::VIDEO_TYPE:
                 $element->type = $value;
@@ -256,8 +255,7 @@ abstract class ObjectBase
 
     private function handleAudioAttribute(Audio $element, string $name, string $value): void
     {
-        switch($name)
-        {
+        switch ($name) {
             case Property::AUDIO_TYPE:
                 $element->type = $value;
                 break;
@@ -267,10 +265,10 @@ abstract class ObjectBase
         }
     }
 
-    protected function convertToDateTime(string $value): ?DateTimeImmutable
+    protected function convertToDateTime(string $value): ?\DateTimeImmutable
     {
         try {
-            return new DateTimeImmutable($value);
+            return new \DateTimeImmutable($value);
         } catch (\Exception $e) {
             return null;
         }
@@ -278,10 +276,9 @@ abstract class ObjectBase
 
     protected function convertToBoolean(string $value): bool
     {
-        switch(strtolower($value))
-        {
-            case "1":
-            case "true":
+        switch (strtolower($value)) {
+            case '1':
+            case 'true':
                 return true;
             default:
                 return false;
@@ -291,7 +288,7 @@ abstract class ObjectBase
     /**
      * Gets all properties set on this object.
      *
-     * @return  Property[]
+     * @return Property[]
      */
     public function getProperties(): array
     {
@@ -300,16 +297,16 @@ abstract class ObjectBase
         foreach ($this->audios as $audio) {
             $properties = array_merge($properties, $audio->getProperties());
         }
-        
-        if ($this->title !== null) {
+
+        if (null !== $this->title) {
             $properties[] = new Property(Property::TITLE, $this->title);
         }
 
-        if ($this->description !== null) {
+        if (null !== $this->description) {
             $properties[] = new Property(Property::DESCRIPTION, $this->description);
         }
 
-        if ($this->determiner !== null) {
+        if (null !== $this->determiner) {
             $properties[] = new Property(Property::DETERMINER, $this->determiner);
         }
 
@@ -317,7 +314,7 @@ abstract class ObjectBase
             $properties = array_merge($properties, $image->getProperties());
         }
 
-        if ($this->locale !== null) {
+        if (null !== $this->locale) {
             $properties[] = new Property(Property::LOCALE, $this->locale);
         }
 
@@ -325,27 +322,27 @@ abstract class ObjectBase
             $properties[] = new Property(Property::LOCALE_ALTERNATE, $locale);
         }
 
-        if ($this->richAttachment !== null) {
-            $properties[] = new Property(Property::RICH_ATTACHMENT, (int)$this->richAttachment);
+        if (null !== $this->richAttachment) {
+            $properties[] = new Property(Property::RICH_ATTACHMENT, (int) $this->richAttachment);
         }
 
         foreach ($this->seeAlso as $seeAlso) {
             $properties[] = new Property(Property::SEE_ALSO, $seeAlso);
         }
 
-        if ($this->siteName !== null) {
+        if (null !== $this->siteName) {
             $properties[] = new Property(Property::SITE_NAME, $this->siteName);
         }
 
-        if ($this->type !== null) {
+        if (null !== $this->type) {
             $properties[] = new Property(Property::TYPE, $this->type);
         }
 
-        if ($this->updatedTime !== null) {
-            $properties[] = new Property(Property::UPDATED_TIME, $this->updatedTime->format("c"));
+        if (null !== $this->updatedTime) {
+            $properties[] = new Property(Property::UPDATED_TIME, $this->updatedTime->format('c'));
         }
 
-        if ($this->url !== null) {
+        if (null !== $this->url) {
             $properties[] = new Property(Property::URL, $this->url);
         }
 

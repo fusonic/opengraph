@@ -2,6 +2,10 @@
 composer.lock
 vendor/
 
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
 ###> phpunit/phpunit ###
 /phpunit.xml
 /.phpunit.cache

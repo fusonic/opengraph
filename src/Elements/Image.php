@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Copyright (c) Fusonic GmbH. All rights reserved.
+ * Licensed under the MIT License. See LICENSE file in the project root for license information.
+ */
+
+declare(strict_types=1);
+
 namespace Fusonic\OpenGraph\Elements;
 
 use Fusonic\OpenGraph\Property;
@@ -11,87 +18,73 @@ class Image extends ElementBase
 {
     /**
      * The URL of an image resource associated with the object.
-     *
-     * @var string
      */
-    public $url;
+    public ?string $url = null;
 
     /**
      * An alternate URL to use if an image resource requires HTTPS.
-     *
-     * @var string
      */
-    public $secureUrl;
+    public ?string $secureUrl = null;
 
     /**
      * The MIME type of an image resource.
-     *
-     * @var type
      */
-    public $type;
+    public ?string $type = null;
 
     /**
      * The width of an image resource in pixels.
-     *
-     * @var int
      */
-    public $width;
+    public ?int $width = null;
 
     /**
      * The height of an image resource in pixels.
-     *
-     * @var int
      */
-    public $height;
+    public ?int $height = null;
 
     /**
      * Whether the image is user-generated or not.
-     *
-     * @var bool
      */
-    public $userGenerated;
+    public ?bool $userGenerated = null;
 
     /**
-     * @param   string      $url            URL to the image file.
+     * @param string $url URL to the image file
      */
-    public function __construct($url)
+    public function __construct(string $url)
     {
-        parent::__construct();
-
         $this->url = $url;
     }
 
     /**
      * Gets all properties set on this element.
      *
-     * @return  array|Property[]
+     * @return Property[]
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         $properties = [];
 
         // URL must precede all other properties
-        if ($this->url !== null) {
+        if (null !== $this->url) {
             $properties[] = new Property(Property::IMAGE_URL, $this->url);
         }
 
-        if ($this->height !== null) {
+        if (null !== $this->height) {
             $properties[] = new Property(Property::IMAGE_HEIGHT, $this->height);
         }
 
-        if ($this->secureUrl !== null) {
+        if (null !== $this->secureUrl) {
             $properties[] = new Property(Property::IMAGE_SECURE_URL, $this->secureUrl);
         }
 
-        if ($this->type !== null) {
+        if (null !== $this->type) {
             $properties[] = new Property(Property::IMAGE_TYPE, $this->type);
         }
 
-        if ($this->width !== null) {
+        if (null !== $this->width) {
             $properties[] = new Property(Property::IMAGE_WIDTH, $this->width);
         }
 
-        if ($this->userGenerated !== null) {
+        if (null !== $this->userGenerated) {
             $properties[] = new Property(Property::IMAGE_USER_GENERATED, $this->userGenerated);
         }
 
