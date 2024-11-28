@@ -17,13 +17,10 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
- * Consumer that extracts Open Graph data from either a URL or a HTML string.
+ * Consumer that extracts Open Graph data from either a URL or an HTML string.
  */
 class Consumer
 {
-    private ?ClientInterface $client;
-    private ?RequestFactoryInterface $requestFactory;
-
     /**
      * When enabled, crawler will read content of title and meta description if no
      * Open Graph data is provided by target page.
@@ -40,10 +37,10 @@ class Consumer
      * @param ClientInterface|null         $client         a PSR-18 ClientInterface implementation
      * @param RequestFactoryInterface|null $requestFactory a PSR-17 RequestFactoryInterface implementation
      */
-    public function __construct(?ClientInterface $client = null, ?RequestFactoryInterface $requestFactory = null)
-    {
-        $this->client = $client;
-        $this->requestFactory = $requestFactory;
+    public function __construct(
+        private ?ClientInterface $client = null,
+        private ?RequestFactoryInterface $requestFactory = null,
+    ) {
     }
 
     /**
@@ -55,7 +52,7 @@ class Consumer
      */
     public function loadUrl(string $url): ObjectBase
     {
-        if (null === $this->client) {
+        if (null === $this->client || null === $this->requestFactory) {
             throw new \LogicException(
                 'To use loadUrl() you must provide $client and $requestFactory when instantiating the consumer.'
             );
@@ -90,7 +87,7 @@ class Consumer
     private function extractOpenGraphData(string $content): ObjectBase
     {
         $crawler = new Crawler();
-        $crawler->addHTMLContent($content, 'UTF-8');
+        $crawler->addHtmlContent(content: $content);
 
         $properties = [];
         foreach (['name', 'property'] as $t) {
@@ -99,6 +96,8 @@ class Consumer
 
             // Create clean property array
             $props = [];
+
+            /** @var \DOMElement $tag */
             foreach ($ogMetaTags as $tag) {
                 $name = strtolower(trim($tag->getAttribute($t)));
                 $value = trim($tag->getAttribute('content'));
@@ -115,15 +114,15 @@ class Consumer
         $object->assignProperties($properties, $this->debug);
 
         // Fallback for url
-        if ($this->useFallbackMode && !$object->url) {
+        if ($this->useFallbackMode && null === $object->url) {
             $urlElement = $crawler->filter("link[rel='canonical']")->first();
             if ($urlElement->count() > 0) {
-                $object->url = trim($urlElement->attr('href'));
+                $object->url = trim($urlElement->attr('href') ?? '');
             }
         }
 
         // Fallback for title
-        if ($this->useFallbackMode && !$object->title) {
+        if ($this->useFallbackMode && null === $object->title) {
             $titleElement = $crawler->filter('title')->first();
             if ($titleElement->count() > 0) {
                 $object->title = trim($titleElement->text());
@@ -131,10 +130,10 @@ class Consumer
         }
 
         // Fallback for description
-        if ($this->useFallbackMode && !$object->description) {
+        if ($this->useFallbackMode && null === $object->description) {
             $descriptionElement = $crawler->filter("meta[property='description']")->first();
             if ($descriptionElement->count() > 0) {
-                $object->description = trim($descriptionElement->attr('content'));
+                $object->description = trim($descriptionElement->attr('content') ?? '');
             }
         }
 

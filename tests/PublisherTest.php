@@ -31,7 +31,7 @@ final class PublisherTest extends TestCase
     }
 
     #[DataProvider('generateHtmlValuesProvider')]
-    public function testGenerateHtmlValues($value, $expectedContent)
+    public function testGenerateHtmlValues(int|float|bool|string|\DateTime $value, string $expectedContent): void
     {
         // arrange
         $publisher = new Publisher();
@@ -42,10 +42,7 @@ final class PublisherTest extends TestCase
         $result = $publisher->generateHtml($object);
 
         // assert
-        self::assertSame(
-            expected: \sprintf('<meta property="%s" content="%s">', TestPublishObject::KEY, $expectedContent),
-            actual: $result
-        );
+        self::assertSame(\sprintf('<meta property="%s" content="%s">', TestPublishObject::KEY, $expectedContent), $result);
     }
 
     public function testGenerateHtmlUnsupportedObject(): void
@@ -62,6 +59,9 @@ final class PublisherTest extends TestCase
         $publisher->generateHtml($object);
     }
 
+    /**
+     * @return array<string, list<int|float|bool|string|\DateTime>>
+     */
     public static function generateHtmlValuesProvider(): array
     {
         return [

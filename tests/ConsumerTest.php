@@ -171,7 +171,7 @@ final class ConsumerTest extends TestCase
         $result = $consumer->loadHtml($content);
 
         // assert
-        self::assertSame(3, \count($result->images));
+        self::assertCount(3, $result->images);
         self::assertSame('http://example.com/rock.jpg', $result->images[0]->url);
         self::assertSame(300, $result->images[0]->width);
         self::assertSame(300, $result->images[0]->height);
@@ -205,7 +205,7 @@ final class ConsumerTest extends TestCase
         $result = $consumer->loadHtml($content);
 
         // assert
-        self::assertSame(1, \count($result->images));
+        self::assertCount(1, $result->images);
         self::assertSame('http://example.com/rock.jpg', $result->images[0]->url);
         self::assertSame('https://example.com/rock.jpg', $result->images[0]->secureUrl);
         self::assertSame(300, $result->images[0]->width);
@@ -235,7 +235,7 @@ final class ConsumerTest extends TestCase
         $result = $consumer->loadHtml($content);
 
         // assert
-        self::assertSame(1, \count($result->videos));
+        self::assertCount(1, $result->videos);
         self::assertSame('http://example.com/rock.ogv', $result->videos[0]->url);
         self::assertSame('https://example.com/rock.ogv', $result->videos[0]->secureUrl);
         self::assertSame(300, $result->videos[0]->width);
@@ -263,7 +263,7 @@ final class ConsumerTest extends TestCase
         $result = $consumer->loadHtml($content);
 
         // assert
-        self::assertSame(1, \count($result->audios));
+        self::assertCount(1, $result->audios);
         self::assertSame('http://example.com/rock.mp3', $result->audios[0]->url);
         self::assertSame('https://example.com/rock.mp3', $result->audios[0]->secureUrl);
         self::assertSame('audio/mp3', $result->audios[0]->type);
@@ -287,7 +287,7 @@ final class ConsumerTest extends TestCase
         $result = $consumer->loadHtml($content);
 
         // assert
-        self::assertSame(0, \count($result->images));
+        self::assertCount(0, $result->images);
     }
 
     public function testCrawlHtmlImageExceptionDebugOn(): void
@@ -330,7 +330,7 @@ final class ConsumerTest extends TestCase
         $result = $consumer->loadHtml($content);
 
         // assert
-        self::assertSame(0, \count($result->videos));
+        self::assertCount(0, $result->videos);
     }
 
     public function testCrawlHtmlVideoExceptionDebugOn(): void
@@ -373,7 +373,7 @@ final class ConsumerTest extends TestCase
         $result = $consumer->loadHtml($content);
 
         // assert
-        self::assertSame(0, \count($result->audios));
+        self::assertCount(0, $result->audios);
     }
 
     public function testCrawlHtmlAudioExceptionDebugOn(): void
