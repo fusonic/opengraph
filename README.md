@@ -3,7 +3,7 @@
 [![GitHub Release](https://img.shields.io/github/v/release/fusonic/opengraph)](https://github.com/fusonic/opengraph/releases/latest)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/fusonic/opengraph?color=blue)](https://packagist.org/packages/fusonic/opengraph)
 [![Packagist License](https://img.shields.io/packagist/l/fusonic/opengraph)](https://github.com/fusonic/opengraph/blob/master/LICENSE)
-[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/fusonic/opengraph/test)](https://github.com/fusonic/opengraph/actions/workflows/test.yml)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/fusonic/opengraph/test.yml?logo=github&label=Tests)](https://github.com/fusonic/opengraph/actions/workflows/test.yml)
 
 A simple library to read Open Graph data from the web and generate HTML code to publish your own Open Graph objects. A
 fallback mode enables you to read data from websites that do not implement the Open Graph protocol.
