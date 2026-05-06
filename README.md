@@ -65,6 +65,7 @@ $image = $object->images[0];
 echo "Image[0] URL: " . $image->url;             // https://i1.ytimg.com/vi/P422jZg50X4/maxresdefault.jpg
 echo "Image[0] height: " . $image->height;       // null (May return height in pixels on other pages)
 echo "Image[0] width: " . $image->width;         // null (May return width in pixels on other pages)
+echo "Image[0] alt: " . $image->alt;             // The alt text
 
 // Videos
 $video = $object->videos[0];
