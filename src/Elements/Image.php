@@ -84,6 +84,10 @@ class Image extends ElementBase
             $properties[] = new Property(Property::IMAGE_WIDTH, $this->width);
         }
 
+        if (null !== $this->alt) {
+            $properties[] = new Property(Property::IMAGE_ALT, $this->alt);
+        }
+
         if (null !== $this->userGenerated) {
             $properties[] = new Property(Property::IMAGE_USER_GENERATED, $this->userGenerated);
         }
