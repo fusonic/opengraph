@@ -47,6 +47,11 @@ class Image extends ElementBase
     public ?bool $userGenerated = null;
 
     /**
+     * Alternative text for the image.
+     */
+    public ?string $alt = null;
+
+    /**
      * @param string $url URL to the image file
      */
     public function __construct(string $url)
@@ -82,6 +87,10 @@ class Image extends ElementBase
 
         if (null !== $this->width) {
             $properties[] = new Property(Property::IMAGE_WIDTH, $this->width);
+        }
+
+        if (null !== $this->alt) {
+            $properties[] = new Property(Property::IMAGE_ALT, $this->alt);
         }
 
         if (null !== $this->userGenerated) {

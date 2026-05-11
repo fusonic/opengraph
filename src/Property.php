@@ -26,6 +26,7 @@ class Property
     public const IMAGE_TYPE = 'og:image:type';
     public const IMAGE_URL = 'og:image:url';
     public const IMAGE_WIDTH = 'og:image:width';
+    public const IMAGE_ALT = 'og:image:alt';
     public const IMAGE_USER_GENERATED = 'og:image:user_generated';
     public const LOCALE = 'og:locale';
     public const LOCALE_ALTERNATE = 'og:locale:alternate';

@@ -148,6 +148,7 @@ abstract class ObjectBase
                 case Property::IMAGE_SECURE_URL:
                 case Property::IMAGE_TYPE:
                 case Property::IMAGE_WIDTH:
+                case Property::IMAGE_ALT:
                 case Property::IMAGE_USER_GENERATED:
                     if (\count($this->images) > 0) {
                         $this->handleImageAttribute($this->images[\count($this->images) - 1], $name, $value);
@@ -222,6 +223,9 @@ abstract class ObjectBase
                 break;
             case Property::IMAGE_WIDTH:
                 $element->width = (int) $value;
+                break;
+            case Property::IMAGE_ALT:
+                $element->alt = $value;
                 break;
             case Property::IMAGE_TYPE:
                 $element->type = $value;
