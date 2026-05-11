@@ -194,6 +194,7 @@ final class ConsumerTest extends TestCase
                     <meta property="og:image:width" content="300">
                     <meta property="og:image:height" content="300">
                     <meta property="og:image:type" content="image/jpg">
+                    <meta property="og:image:alt" content="Picture of a rock">
                 </head>
                 <body></body>
             </html>
@@ -211,6 +212,7 @@ final class ConsumerTest extends TestCase
         self::assertSame(300, $result->images[0]->width);
         self::assertSame(300, $result->images[0]->height);
         self::assertSame('image/jpg', $result->images[0]->type);
+        self::assertSame('Picture of a rock', $result->images[0]->alt);
     }
 
     public function testLoadHtmlVideos(): void

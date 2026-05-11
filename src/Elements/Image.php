@@ -47,6 +47,11 @@ class Image extends ElementBase
     public ?bool $userGenerated = null;
 
     /**
+     * Alternative text for the image.
+     */
+    public ?string $alt = null;
+
+    /**
      * @param string $url URL to the image file
      */
     public function __construct(string $url)
